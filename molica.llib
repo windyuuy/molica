@@ -1,0 +1,3634 @@
+package.preload['src.app.Game.mSKGame.CocosExt.StudioHelper']=(function(...)local e={}function e:seekNodeByName(n,t)return seekNodeByName(n,t)end
+e._compat_mode=false
+function e:searchViewNode(t,n)local l=n or cc.Director:getInstance():getRunningScene()local o={}local n
+for e,t in pairs(t)do
+if(type(e)=='string')then
+n=e
+else
+n=t
+end
+o[n]=seekNodeByName(l,t)end
+setmetatable(o,{__index=function(o,t)local n=seekNodeByName(l,t)if(e._compat_mode)then
+if(not n)then
+local e={}setmetatable(e,{__index=function()return e
+end,__call=function()end})end
+else
+gonv(n,'getNode<'..t..'> not exist !!')end
+rawset(o,t,n)return n
+end})return o
+end
+function e:getRunningScene()return cc.Director:getInstance():getRunningScene()end
+e.getCurScene=e.getRunningScene
+function e:seekNodeOnCurScene(n)local e=self:getRunningScene()return seekNodeByName(e,n)end
+return e
+end)package.preload['src.app.Game.mSKGame.cc_ext.vtransition']=(function(...)local e={}return e
+end)package.preload['src.app.Game.mSKGame.GS.CSS']=(function(...)local n=import('.IDMetaManager')local l=import('.Selector')if(not cc)then
+import('..cc_ext.Cocos2d')end
+local a=import('.EN')local function o(e)local t=e.IDs
+local e
+for t,o in pairs(t)do
+e=n.getMeta(t,'css')e.apply(t,nil)end
+return nil,true
+end
+a:subscribe({'ScopeTaskDidit'},o)local function s(o,a)local t=n.getMeta('_css_common','selector')if(not t)then
+local e=n.getMeta('_css_common','_idhost')if(not e)then
+e={}n.setMeta('_css_common','_idhost',e)end
+t=l.createSelector(e)end
+local e=l.loadWithSelector(o,'src.app.Game.mSKGame.'..a..'.lua',t)dumptofile(n.getMeta('_css_common','_idhost'),'idhost')n.setMeta(o,'dss',e)return e
+end
+local function t(e)return n.getMeta(e,'dss')or{}end
+local function l(t,e)n.setMeta(t,'dss',e)end
+local function i(o,e)if(e)then
+l(o,e)else
+e=t(o)end
+local e=e._IDHost or n.getMeta('_css_common','_idhost')or{}return e
+end
+local function m(e,n)local e=t(e)return e.Node and e.Node.ContentSize or cc.size(0,0)end
+local function h(e,n)local e=t(e)return e.Node and e.Node.Offset or cc.p(0,0)end
+local function p(e,t,o)local l=n.getMeta(e,'css')local n={}for t,a in pairs(t)do
+n[t]=l.calcPos(e,t.nodeid,a,o)end
+return n
+end
+local function a(e,t,l)local n=n.getMeta(e,'scope')local n=i(e)local n=n['_I']local e=n and n[e]local a=e and e.direction or'TRRT'local o=l.width
+local e=l.height
+local t,n=t[1],t[2]gonb(o>0 and e>0,'')local e={TRRT=function()return(n-1)*o+t end,TRBR=function()return(t-1)*e+(e-n+1)end,RTRT=function()return(t-1)*e+n end,TLRT=function()return(n-1)*o+(o-t+1)end,LTRT=function()return(t-1)*e+(e-n+1)end,TRTR=function()return(t-1)*e+n end,}local e=gonv(e[a])()print(e)return e
+end
+local function t(t,e,n)local e=e.pickNodeByName(t,tostring(n))gonb(e~=nil,'vnode is nil')return e
+end
+local function f(e,o,r,l)local o=n.getMeta(e,'scope')local n=a(e,r,l)local n=t(e,o,n)local e
+if(n==nil)then
+e=cc.p(0,0)else
+e=cc.p(n:getPosition())end
+if(type(e)=='number')then
+print('jwlekfj')end
+return e
+end
+local function u(e,l,o,i)local r=n.getMeta(e,'scope')local o=a(e,l,o)local t=t(e,r,o)local e=n.getMeta(i,'container')local e=e:convertToNodeSpace(t:convertToWorldSpace(cc.p(0,0)))return e
+end
+local function d(e)if(e.__originMeta)then
+local n=e.__originMeta
+gontype(n,'table')for n,t in pairs(n)do
+local n=e['set'..n]gontype(n,'function')n(e,unpack(t))end
+end
+e.__originMeta=nil
+end
+local function c(i,n,l)local t,o,a,r,e
+for c,i in ipairs(i)do
+e=i:getStuff()o=e['set'..n]if(type(l)=='boolean')then
+t=e['is'..n]else
+t=e['get'..n]end
+if(t==nil)then
+dumptofile(i,'sobj')dumptofile(n,'meta')dumptofile('metatype',type(l))dumptofile(e._stufffilename,'_stufffilename')if(e.getName)then dumptofile(e:getName(),'objName_get<'..n..'> is nil')end
+gonb(false)end
+if(o==nil)then
+dumptofile(e,'obj')dumptofile(n,'meta')if(e.getName)then dumptofile(e:getName(),'objName_set<'..n..'> is nil')end
+gonb(false)end
+gonb(type(o)=='function'and type(t)=='function','<'..n..'> is not meta !! [ for id: '..tostring(e.getName and e:getName())..' ]')r=t(e)a=false
+if(type(r)=='table'and type(l)=='table')then
+a=table.equal(t(e),l)else
+a=(r==l)end
+if(not e.__originMeta)then
+e.__originMeta={}end
+local i=e.__originMeta
+if(not i[n])then
+i[n]={r}end
+if(type(o)=='function'and type(t)=='function'and not a)then
+o(e,l)end
+t=nil
+o=nil
+end
+end
+local function l(e,t)if(e=='CardInhand1')then
+local e=323
+e=5445
+end
+local t=i(e,t)local o=t['_B']if not o then return end
+local t
+do
+local o=o[e]if(not o)then return end
+dumptofile(n._ConfigBuffer)dumptofile(e,'id')local n=n.getMeta(e,'scope')if(n==nil)then
+return
+end
+t=n.seekObjByID(e)gonv(t)if(t==nil or#t==0)then
+return
+end
+for n,e in pairs(o)do
+c(t,n,e)end
+end
+end
+local function e()return n.getMeta('_css_common','selector')end
+local e={apply=l,resetObjMeta=d,getContentSize=m,getOffset=h,calcPos=f,convPos=p,loadCSS=s,getSelector=e,calcRelativePos=u,}return e
+end)package.preload['src.app.Game.mSKGame.GS.init']=(function(...)local e={AGM=import('.AGM'),}return e
+end)package.preload['src.app.Game.mSKGame.ext.debugsys']=(function(...)local e={}local n=cc and cc.FileUtils and cc.FileUtils:getInstance():getGameWritablePath()or''function e.dumpbdata(t,e)local e=io.open(n..'bdata/'..e,'wb')e:write(t)e:close()end
+function e.loadbdata(e)local e=io.open(n..'bdata/'..e,'rb')local n=e:read('*a')e:close()return n
+end
+return e
+end)package.preload['src.app.Game.mSKGame.ext.table_ext']=(function(...)local e=import('.params')local a=e.param
+local n=import('.listutils')table.tmap=n.tmap
+function table.tfilter(o,e)local t=e
+if(type(e)=='table')then
+e=function(e)return table.exist(t,e)end
+end
+return n.filter(e,o)end
+function table.choosebykey(n,e)local t=nil
+if(n[e])then
+t=n[e]table.removeItem(n,e)end
+return t
+end
+function table.choosebykeys(n,e)local t={}for o,e in ipairs(e)do
+if(n[e])then
+assert(type(e)~='number','')table.append(t,n[e])n[e]=nil
+end
+end
+return t
+end
+function table.ichoosebykeys(n,e)e=table.clone(e)table.sort(e,function(n,e)if(type(e)~='number')then
+return true
+elseif(type(n)=='number')then
+return n>e
+else
+return false
+end
+end)local t={}for o,e in ipairs(e)do
+if(n[e])then
+assert(type(e)~='number','')table.append(t,n[e])n[e]=nil
+end
+end
+return t
+end
+local n=0
+if(DEBUG==nil)then
+n=1
+end
+local t
+t=function(t,e,n)for o=1,#n do
+e=t(e,n[o])end
+return e
+end
+table.foldl=t
+if(n>0)then
+function table.merge(e,n)assert(type(n)=='table'and type(e)=='table','')for t,n in pairs(n)do
+e[t]=n
+end
+return e
+end
+else
+function table.merge(e,n)assert(type(n)=='table'and type(e)=='table','')for t,n in pairs(n)do
+e[t]=n
+end
+return e
+end
+end
+function table.backableMerge(e,t)local o={}for n,t in pairs(t)do
+if(e[n])then
+o[n]=e[n]end
+e[n]=t
+end
+return function()table.exclude(e,t)table.merge(e,o)end
+end
+function table.backableForceMerge(e,t)local o={}local l=getmetatable(e)if(l.__newindex)then
+setmetatable(e,nil)end
+for n,t in pairs(t)do
+if(e[n])then
+o[n]=e[n]end
+e[n]=t
+end
+setmetatable(e,l)return function()local n=getmetatable(e)if(n.__newindex)then
+setmetatable(e,nil)end
+table.exclude(e,t)table.merge(e,o)setmetatable(e,n)end
+end
+function table.sub(o,t,e)local n={}for e=1,e do
+n[e]=o[e+t-1]end
+return n
+end
+function table.nums(n)local e=0
+for n,n in pairs(n)do
+e=e+1
+end
+return e
+end
+function table.keys(n)local e={}for n,t in pairs(n)do
+e[#e+1]=n
+end
+return e
+end
+function table.findvalue(e,t,o)for n,e in pairs(v)do
+if(o(e)==t)then
+return e,n
+end
+end
+end
+function table.findfvalue(e,n,o)for t,e in pairs(e)do
+if(o(e,n))then
+return e,t
+end
+end
+end
+function table.values(n)local e={}for t,n in pairs(n)do
+e[#e+1]=n
+end
+return e
+end
+function table.merge(t,e)for e,n in pairs(e)do
+t[e]=n
+end
+end
+function table.insertto(n,t,e)e=checkint(e)if e<=0 then
+e=#n+1
+end
+local o=#t
+for o=0,o-1 do
+n[o+e]=t[o+1]end
+end
+function table.indexof(e,t,n)for n=n or 1,#e do
+if e[n]==t then return n end
+end
+return false
+end
+function table.keyof(e,n)for t,e in pairs(e)do
+if e==n then return t end
+end
+return nil
+end
+function table.remove_value(n,t)for e,o in pairs(n)do
+if(o==t)then
+if(type(e)=="number")then
+repeat
+table.remove(n,e)until(n[e]~=t)else
+n[e]=nil
+end
+end
+end
+end
+function table.remove_list(e,n)for t,n in pairs(n)do
+table.removebyvalue(e,n,false)end
+end
+function table.removebyvalue(o,l,a)local n,e,t=0,1,#o
+while e<=t do
+if o[e]==l then
+table.remove(o,e)n=n+1
+e=e-1
+t=t-1
+if not a then break end
+end
+e=e+1
+end
+return n
+end
+function table.map(e,t)for n,o in pairs(e)do
+e[n]=t(o,n)end
+return e
+end
+function table.walk(e,n)for t,e in pairs(e)do
+n(e,t)end
+end
+table.strip=function(e,n)table.removebyvalue(e,n,true)return e
+end
+function table.filter(n,t)for e,o in pairs(n)do
+if not t(o,e)then n[e]=nil end
+end
+end
+function table.checkunique(e)local n=table.unique(e,true)return table.containsame(e,n)end
+function table.unique(e,l)local o={}local t={}local n=1
+for a,e in pairs(e)do
+if not o[e]then
+if l then
+t[n]=e
+n=n+1
+else
+t[a]=e
+end
+o[e]=true
+end
+end
+return t
+end
+function table.collect(e,n)assert(type(n)=='table'and type(e)=='table','')for n,t in pairs(n)do
+if(e[n]==nil)then e[n]=t end
+end
+end
+function table.extend(n,e,t)t=a(t,true)assert(type(e)=='table'and type(n)=='table','')setmetatable(n,{__index=e})if(t and e.__init)then
+e.__init(n)end
+return n
+end
+function table.makeextend(n,t)local e={}table.extend(e,n,t)return e
+end
+function table.iextend(e,n)assert(type(n)=='table'and type(e)=='table','')for t,n in pairs(n)do
+e[#e+1]=n
+end
+end
+function table.clone(n)local e={}table.merge(e,n)return e
+end
+function table.deepclone(e)local n={}for t,e in pairs(e)do
+if(type(e)=='table')then
+n[t]=table.deepclone(e)else
+n[t]=e
+end
+end
+return n
+end
+function table.containsame(n,e)return table.contain(n,e)and table.contain(e,n)end
+function table.containSameType(n,t)local e
+for o,n in pairs(n)do
+if(not e)then
+e=n
+else
+if(t(n)~=t(e))then
+return false
+end
+end
+end
+return true
+end
+function table.equal(n,e)for t,n in pairs(n)do
+if(e[t]~=n)then
+return false
+end
+end
+for t,e in pairs(e)do
+if(n[t]~=e)then
+return false
+end
+end
+return true
+end
+function table.removeItem(n,e)if(type(e)=='number')then
+table.remove(n,e)else
+n[e]=nil
+end
+end
+function table.exclude(n,e)assert(type(n)=='table','')assert(type(e)=='table','')for t,e in pairs(e)do
+table.remove_value(n,e)end
+end
+function table.slice(t,e)local n,e=e.a,e.b
+n=n or 1
+e=e or#t
+local o={}for e=n,e do
+table.append(o,t[e])end
+return o
+end
+function table.diffNewItem(o,e)local t={}for n,e in pairs(e)do
+if(o[n]~=e)then
+t[n]=e
+end
+end
+return t
+end
+function table.sortr(e,...)table.sort(e,...)return e
+end
+function table.iclear(e)for n=#e,1,-1 do
+table.remove(e,1)end
+end
+function table.split(e,o)if(#e==0)then
+return{}end
+local n={}local t=mdiv(#e-1,o)+1
+for e=1,t do
+n[e]={}end
+for t=1,#e do
+table.append(n[mdiv(t-1,o)+1],e[t])end
+return n
+end
+function table.count(n)local e=0
+table.foreach(n,function()e=e+1
+end)return e
+end
+function table.icountElementF(t,o,n)local e=0
+for l,t in ipairs(t)do
+if(n(t)==n(o))then
+e=e+1
+end
+end
+return e
+end
+function table.countElementF(o,t,n)local e=0
+table.foreach(o,function(l,o)if(n(o)==n(t))then
+e=e+1
+end
+end)return e
+end
+function table.countElement(n,t)local e=0
+table.foreach(n,function(o,n)if(n==t)then
+e=e+1
+end
+end)return e
+end
+function table.exist(n,e)return table.keyof(n,e)~=nil
+end
+table.isVal=table.exist
+function table.contain(e,n)for t,n in pairs(n)do
+if(not table.exist(e,n))then
+return false
+end
+end
+return true
+end
+function table.append(e,n)e[#e+1]=n
+return e
+end
+function table.pop_back(e)return table.remove(e,1)end
+function table.choose_all(n,e)if(table.contain(n,e))then
+table.exclude(n,e)return true
+end
+return false
+end
+function table.choose(n,e)if(table.contain(n,e))then
+table.remove_list(n,e)return true
+end
+return false
+end
+function table.fill_empty(e,n,t)assert(#e==0,'')for n=1,n do
+e[n]=t
+end
+end
+function table.reverse(t)local n={}local e=#t
+for o=1,e do
+n[o]=t[e-o+1]end
+return n
+end
+function table.expand(n,e)gonv(n)gonv(e)if(not n[e])then
+n[e]={}end
+return n[e]end
+local function o(e)local n=function()assert(false,'try to change readonly table')end
+setmetatable(e,{__newindex=n})return e
+end
+function table.readonly(n)local e={}local t=function()assert(false,'try to change readonly table')end
+setmetatable(e,{__index=n,__newindex=t})return e
+end
+local n=table.sort
+function table.sort(e,...)n(e,...)return e
+end
+function table.sortf(n,t,e)table.sort(n,(function(o,n)return t(e(o),e(n))end))return n
+end
+local e={}_g.sort=e
+function e.hs(n,e)return n<e
+end
+function e.hh(n,e)return n>e
+end
+function table.hash_is(t)return table.concat((function()local n={}local e=1
+for o,t in ipairs(t)do
+n[e]=tostring(t)e=e+1
+end
+return n
+end)(),'_')end
+local function t(e,n)for o,e in pairs(e)do
+if(type(e)=='table')then
+t(e,n)else
+n(e,o)end
+end
+return true
+end
+function table.foreach_deep(n,e)gont(n)gontype(e,'function')t(n,e)end
+function table.mergeAllTable(n,e)e=e or{}for t,n in ipairs(n)do
+table.merge(e,n)end
+return e
+end
+function table.imergeAllTable(n,e)local e=e or{}for t,n in ipairs(n)do
+table.iextend(e,n)end
+return e
+end
+function table.group(t,o)local n={}local e
+for l,t in pairs(t)do
+e=o(t)if(e)then
+if(not n[e])then
+n[e]={}end
+n[e][l]=t
+end
+end
+return n
+end
+if(DEBUG~=nil)then
+cc.exports.readonly=o
+end
+end)package.preload['src.app.Game.mSKGame.GS.GridLayout']=(function(...)local e=pubmediator
+local a=_import('.IDMetaManager')local n=_import('.Matrix2')local p=_import('.ScopeTask')local s={}local t
+t=function(e)local n={}for t,e in pairs(e)do
+for o,e in ipairs(e)do
+n[{e[3],e[4],nodeid=t}]={e[1],e[2]}end
+end
+return n
+end
+local o
+o=function(l,o,e)n.stripValue(e,false)local n,o,l,a=n.diff(o,e)local e={}for o,n in ipairs({n,o,l,a})do
+e[o]=t(n)end
+return e
+end
+local f
+f=function(r,e)gonv(e)local t=a.getMeta(r,'matrix')local l=t or{width=0,height=0}if(t==nil)then
+assert(e.width and e.height,'')l.width=e.width
+l.height=e.height
+else
+assert(t.width and t.height,'')e.width=e.width or l.width
+e.height=e.height or l.height
+end
+assert(l.width and l.height,'')local i,d,c,u=unpack(o(r,l,e))local t=n.applyChanges(e,i,d,c,u)if(true)then
+local o={}table.merge(o,u)table.merge(o,i)table.merge(o,c)o=table.keys(o)if(table.count(o)~=n.count(t))then
+dumptofile(o,'allIDs')dumptofile(e,'matrix')dumptofile(t,'newmatrix')end
+if(n.count(t)~=n.count(e))then
+dumptofile(o,'allIDs')dumptofile(e,'matrix')dumptofile(t,'newmatrix')end
+assert(table.count(o)==n.count(t),'')assert(n.count(t)==n.count(e),'')assert(n.containSame(t,e),'')end
+a.setMeta(r,'oldmatrix',l)a.setMeta(r,'matrix',t)return p.applyLayout({r,{diffIDs=i,rmIDs=d,newIDs=c},e,t})end
+local t
+t=function(n,e)return a.setMeta(n,'scope_layout_data',e)end
+local o
+o=function(n)local e=a.getMeta(n,'scope_layout_data')if(not e)then
+e=a.getMeta(n,'oldmatrix')end
+if(e)then
+a.setMeta(n,'matrix',e)if(#e>0 or#e>0)then
+return print('lwkejflk')end
+end
+end
+local e
+e=function(e,e)end
+local e
+e=function(e,e)end
+local e
+e=function(e,e)end
+return{update=f,None=s,updateScopeLayout=t,stopDeriTask=o}end)package.preload['src.app.Game.mSKGame.GS.Action']=(function(...)end)package.preload['src.app.Game.mSKGame.cc_ext.Timer']=(function(...)local e={duration=1,maxi=1e4,}function e:_init()self.pit=0
+self._taskInfoList={}end
+function e:set(e)self.duration=e or 1
+end
+local n=cc.Director:getInstance():getScheduler()function e:start()self.entry=n:scheduleScriptFunc(handler(self,self.postTask),self.duration or 1,false)end
+function e:pause()gonb(false)end
+function e:stop()gonv(self.postTask)n:unscheduleScriptEntry(self.entry)end
+function e:restart()self:stop()self:start()end
+function e:addTask(t,e,n)e=e or{}gontype(e,{'string','table'})local n={task=t,taskid=e,duration=n,rest=0}self._taskInfoList[e]=n
+return e
+end
+function e:removeTask(e)local n=self._taskInfoList
+if(n)then
+self._taskInfoList[e]=nil
+end
+end
+function e:postTask()local n=self._taskInfoList
+local e=self.pit
+local o=self.maxi
+e=e+1
+if(n)then
+for t,n in pairs(n)do
+local t=n.rest
+local a=n.task
+local l=n.duration
+if((e+t)%l==0)then
+a()end
+if(e>=o)then
+t=(e+t)%l
+n.rest=t
+end
+end
+end
+if(e>=o)then
+e=0
+end
+self.pit=e
+end
+local function t()local n={}setmetatable(n,e)n:_init()return n
+end
+return t
+end)package.preload['src.app.Game.mSKGame.GS.CoCo']=(function(...)local e=_import('.IDMetaManager')local c
+c=function(n,t)local e=e.getMeta(n,'scope')local e=e.seekNode(n,t)return e
+end
+local n
+n=function(n,t)local e=e.getMeta(n,'scope')local e=e.seekNode(n,t)return e and e:getStuff()end
+local i
+i=function(e)return n(unpack(e))end
+local r
+r=function(e)return n(e[1],{e[2],e[3]})end
+local t
+t=function(n,t)local o=e.getMeta(n,'scope_layout_data')local e=e.getMeta(n,'css')local e=e.calcPos(n,nil,t,o)return e
+end
+local l
+l=function(e)return t(unpack(e))end
+local a
+a=function(n,o)local t=e.getMeta(n,'matrix')local e=e.getMeta(n,'css')local e=e.calcPos(n,nil,o,t)return e
+end
+local o
+o=function(n,t,l)local o=e.getMeta(n,'matrix')local e=e.getMeta(n,'css')local e=e.calcRelativePos(n,t,o,l)return e
+end
+return{Node=n,SNode=c,PrePos=t,RelativePos=o,NewPos=a,NodeP=i,NodeG=r,PrePosP=l}end)package.preload['src.app.Game.mSKGame.ext.ccext']=(function(...)function checknumber(e,n)return tonumber(e,n)or 0
+end
+function checkint(e)return math.round(checknumber(e))end
+function checkbool(e)return(e~=nil and e~=false)end
+function checktable(e)if type(e)~="table"then e={}end
+return e
+end
+function isset(n,t)local e=type(n)return(e=="table"or e=="userdata")and n[t]~=nil
+end
+end)package.preload['src.app.Game.mSKGame.Logic.logic']=(function(...)local r
+r=function(n,e)if e==nil then
+e=true
+end
+local n
+n=function(n,e)assert(type(e)=='function','')return n and e()end
+return table.foldl(n,e,out)end
+local a
+a=function(n,e)if e==nil then
+e=false
+end
+local n
+n=function(n,e)assert(type(e)=='function','')return n or e()end
+local e=table.foldl(n,e,out)end
+local l
+l=function(n)local t,e
+local o=n.R or'orr'if(o=='andr')then
+e=true
+elseif(o=='orr')then
+e=false
+else
+assert(false,'')end
+for a,n in ipairs(n)do
+if(type(n)=='function')then
+t=n()elseif(type(n)=='table')then
+t=l(n)elseif(type(n)=='boolean')then
+t=n
+else
+assert(false,'')end
+if(o=='andr')then
+e=e and t
+elseif(o=='orr')then
+e=e or t
+end
+end
+return e
+end
+return{andr=r,orr=a,resolve_logic=l}end)package.preload['src.app.Game.mSKGame.ext.tablex']=(function(...)local a
+a=function(t,n,r)if n==nil then
+n=1
+end
+if(#t==0)then
+return nil
+end
+local e=t[n]local a=toint(e)local o={}local n=n+1
+local l=0
+while(true)do
+if(r and l>=r)then
+break
+end
+if(#t==0)then
+break
+end
+local r=t[n]local t=toint(r)if(a==(t-1))then
+table.append(o,e)a=t
+e=r
+n=n+1
+l=l+1
+else
+table.append(o,e)break
+end
+end
+return o,n-1
+end
+return{cutContinousHead=a}end)package.preload['src.app.Game.mSKGame.CocosExt.TypedSNode']=(function(...)local e={inited=false,onEvent=function(e,t,n)if(e.dispatchEvent and e.lifestage~='recycled')then
+return e:dispatchEvent({name=t,snode=e,params=n})end
+end,onActionEvent=function(e,n)e.actionstatus='doing'e:onEvent(e.action,n)e.actionstatus='done'end,onLifeEvent=function(e,n)return e:onEvent(e.lifestage,n)end,setStatus=function(e,n)local n=table.diffNewItem(e,n)if(not next(n))then
+return
+end
+if(n.lifestage)then
+local t=n.lifestage
+if(t=='touse')then
+e.lifestage=t
+e:onLifeEvent(n)e:updateStatus(n)e:createStuff(n)e.lifestage='using'return e:onLifeEvent(n)elseif(t=='unuse')then
+e.lifestage=t
+e:onLifeEvent(n)e:updateStatus(n)e:delStuff()e.lifestage='recycled'end
+elseif(e.lifestage~='recycled')then
+return e:updateStatus(n)end
+end,setLocalStatus=function(n,e)gonv(e[1])return n:onEvent(e[1],e)end,updateStatus=function(e,n)e.action='setstatus'e:onActionEvent(n)return gonv(e.usingnode)end,getStuff=function(e)gonv(e.usingnode)return e.usingnode
+end,createStuff=function(e,n)if(e.inited)then
+gonv(not e.usingnode)end
+e.action='createstuff'e:onActionEvent(n)gonv(e.usingnode)e.inited=true
+end,delStuff=function(e)gonv(e.usingnode)e.action='delstuff'e:onActionEvent()gonb(usingnode==nil)e.inited=false
+return e:onLifeEvent()end}return e
+end)package.preload['src.app.Game.mSKGame.ext.listutils']=(function(...)local e=ipairs
+local b=function(t,n)for n,e in e(n)do
+t(e)end
+end
+local g=function(t,n)for e,n in e(n)do
+t(n,e)end
+end
+local l=function(t,o)local n={}for o,e in e(o)do
+local e=t(e)if e~=nil then
+n[#n+1]=e
+end
+end
+return n
+end
+local a=function(o,e,n)for t=1,#n do
+e=o(e,n[t])end
+return e
+end
+local d=function(t,e,n)for o=#n,1,-1 do
+e=t(e,n[o])end
+return e
+end
+local u=function(o,t)local n={}for t,e in e(t)do
+if o(e)then
+n[#n+1]=e
+end
+end
+return n
+end
+local i=function(l,o)local t={}local n={}for o,e in e(o)do
+if l(e)then
+t[#t+1]=e
+else
+n[#n+1]=e
+end
+end
+return t,n
+end
+local r=function(t,n)local o={}local e=#t
+if#n<e then e=#n end
+for e=1,e do
+o[e]={t[e],n[e]}end
+return o
+end
+local o=function(o,e)local t={}local n=#o
+if#e<n then n=#e end
+for n=1,n do
+t[o[n]]=e[n]end
+return t
+end
+local c=function(t,n)for n,e in e(n)do
+if not t(e)then
+return false
+end
+end
+return true
+end
+local f=function(t,n)for n,e in e(n)do
+if t(e)then
+return true
+end
+end
+return false
+end
+local h=function(t,n)for n,e in e(n)do
+if e==t then
+return true
+end
+end
+return false
+end
+local m=function(t)local n=t[1]for t,e in e(t)do
+if e>n then
+n=e
+end
+end
+return n
+end
+local p=function(t)local n=t[1]for t,e in e(t)do
+if e<n then
+n=e
+end
+end
+return n
+end
+local s=function(t)local n=0
+for t,e in e(t)do
+n=n+e
+end
+return n
+end
+local e=function(t)local n=1
+for t,e in e(t)do
+n=n*e
+end
+return n
+end
+return{foreach=b,foreach_withindex=g,map=l,tmap=l,foldl=a,reduce=a,foldr=d,filter=u,partition=i,all=c,any=f,member=h,zip=r,max=m,min=p,sum=s,product=e,stitch=o,_VERSION='1.0.0-1',_AUTHOR='Peter Aronoff',_URL='https://bitbucket.org/telemachus/tableutils',_LICENSE='BSD 3-Clause License',}end)package.preload['src.app.Game.mSKGame.cc_ext.table_func']=(function(...)function table.nums(n)local e=0
+for n,n in pairs(n)do
+e=e+1
+end
+return e
+end
+function table.keys(n)local e={}for n,t in pairs(n)do
+e[#e+1]=n
+end
+return e
+end
+function table.values(n)local e={}for t,n in pairs(n)do
+e[#e+1]=n
+end
+return e
+end
+function table.merge(t,e)for n,e in pairs(e)do
+t[n]=e
+end
+end
+function table.insertto(o,t,e)e=checkint(e)if e<=0 then
+e=#o+1
+end
+local n=#t
+for n=0,n-1 do
+o[n+e]=t[n+1]end
+end
+function table.indexof(e,t,n)for n=n or 1,#e do
+if e[n]==t then return n end
+end
+return false
+end
+function table.keyof(e,t)for e,n in pairs(e)do
+if n==t then return e end
+end
+return nil
+end
+function table.removebyvalue(o,a,l)local t,e,n=0,1,#o
+while e<=n do
+if o[e]==a then
+table.remove(o,e)t=t+1
+e=e-1
+n=n-1
+if not l then break end
+end
+e=e+1
+end
+return t
+end
+function table.map(e,o)for n,t in pairs(e)do
+e[n]=o(t,n)end
+end
+function table.walk(e,t)for n,e in pairs(e)do
+t(e,n)end
+end
+function table.filter(e,t)for n,o in pairs(e)do
+if not t(o,n)then e[n]=nil end
+end
+end
+function table.unique(e,l)local o={}local n={}local t=1
+for a,e in pairs(e)do
+if not o[e]then
+if l then
+n[t]=e
+t=t+1
+else
+n[a]=e
+end
+o[e]=true
+end
+end
+return n
+end
+end)package.preload['src.app.Game.mSKGame.GS.Node']=(function(...)end)package.preload['src.app.Game.mSKGame.GS.RangeMG']=(function(...)local a
+a=function(e)local o,l=e:getPosition()local t,n
+do
+local e=e:getContentSize()t,n=e.width,e.height
+end
+local e={o+t,l+n}return{{o,l},e}end
+local l
+l=function(e)return e
+end
+local o
+o=function(e)local t,n,l,o
+t,n,l,o=e[1][1],e[1][2],e[2][1],e[2][2]return{x=t,y=n,width=l-t,height=o-n}end
+local e
+e=function(e,e,e)end
+local e={}do
+e._rangelist={}e.onContainEle=function(t,n)local n=n:convertToWorldSpace(cc.p(0,0))return cc.rectContainsPoint(o(t),n)end
+e.addRange=function(o,t,n)gontype(n,'string')o._rangelist[n]=t
+end
+e.eleInARange=function(n,e,t)local e=n._rangelist[e]gonv(e)if n.onContainEle(e,t)then
+return true
+else
+return false
+end
+end
+end
+local t
+t=function()local n={_rangelist={}}setmetatable(n,{__index=e})return n
+end
+return{Range=a,Ele=l,create=t,o}end)package.preload['src.app.Game.mSKGame.Logic.test_casegen']=(function(...)local e=require('casegen')local n
+n=function()local l=e.mixpair
+local a=e.count_Cnm
+local e={23,5,56,67,5455,345,456,233,34,655,577,2356644}local n=#e
+local t=4
+local r=l(e,t)local o=0
+local e={}for n in r do
+o=o+1
+print(o)e[#e+1]=table.clone(n)dump(n or tostring(n))end
+assert(#e==a(n,t))local o=n
+for l in l(e,2)do
+local o,e
+o,e=l[1],l[2]if(table.equal(o,e))then
+print(n,t)print(o,e)assert(false,'')end
+end
+return print('correct')end
+local n
+n=function()local n=e.cmixpair
+local a=e.count_Cnm
+local o=7
+local l=4
+local e=n(o,l)local t=0
+local n={}for e in e do
+t=t+1
+print(t)n[#n+1]=table.clone(e)dump(e or tostring(e))end
+return assert(#n==a(o,l))end
+local n
+n=function()local e=e.count_Cnm
+return print(e(6,3))end
+local n
+n=function()local o=e.genrangecase
+local e=e.countrangecasesum
+local t={4,5,6}local n=e(t)print(n)local e={}local t=o(t)for n in t do
+e[#e+1]=n
+dump(n)end
+print(#e)return assert(#e==n,'')end
+local n
+n=function()local o=e.cmixpair
+local a=e.count_Cnm
+local e=e.genrangecase
+local e=e({10,4},{4,2})for n in e do
+local e,l
+e,l=n[1],n[2]e=e+l
+local r=o(e,l)local t=0
+local n={}for e in r do
+t=t+1
+print(t)n[#n+1]=table.clone(e)dump(e or tostring(e))end
+if(#n~=a(e,l))then
+print(e,l)assert(false,'')end
+local a=e
+for r in o(a,2)do
+local o,t
+o,t=r[1],r[2]o=a-o+1
+t=a-t+1
+if(table.equal(n[o],n[t]))then
+print(e,l)print(o,t)dump(n[o])dump(n[t])assert(false,'')end
+end
+print('correct')end
+end
+local n
+n=function()local e=e.allsetcompr
+local n={{2,5,6},{34,65,68},{43,45},{43,4676,76}}local e=e(n)for e in e do
+dump(e)end
+end
+local n
+n=function()local e=e.allsetitercomp
+local n={{4,5,cut=1},{23,46,233,5,cut=2}}local e=e(n)for e in e do
+dump(e)end
+end
+return n()end)package.preload['src.app.Game.mSKGame.ext.list_ext']=(function(...)local l
+l=function(o,a)local l={}local t
+local e=1
+local n=o[e]while(n)do
+t=table.hash_is(table.sort((function()local t={}local e=1
+for o,n in ipairs(n)do
+t[e]=a(n)e=e+1
+end
+return t
+end)()))if(not l[t])then
+l[t]=true
+e=e+1
+else
+table.removeItem(o,e)end
+n=o[e]end
+end
+local n
+n=function(l,t,n)local e=0
+local o=n(t)for l,t in ipairs(l)do
+if(n(t)==o)then
+e=e+1
+end
+end
+return e
+end
+return{stripSameEval=l,countSameEval=n}end)package.preload['src.app.Game.mSKGame.ext.params']=(function(...)local n
+n=function(e,n)if(e==nil)then
+return n
+end
+return e
+end
+return{param=n}end)package.preload['src.app.Game.mSKGame.ext.ltdiff']=(function(...)local a={}local function l(o,t)local e={del={},mod={},sub={}}for n,a in pairs(o)do
+if type(o[n])=="function"or type(o[n])=="userdata"then
+error("table_diff only supports diffs of tables!")elseif t[n]~=nil and type(o[n])=="table"and type(t[n])=="table"then
+e.sub[n]=l(o[n],t[n])if next(e.sub[n])==nil then
+e.sub[n]=nil
+end
+elseif t[n]==nil then
+e.del[#(e.del)+1]=n
+elseif t[n]~=a then
+e.mod[n]=t[n]end
+end
+for n,a in pairs(t)do
+if type(t[n])=="function"or type(t[n])=="userdata"then
+error("table_diff only supports diffs of tables!")elseif e.sub[n]~=nil then
+elseif o[n]~=nil and type(o[n])=="table"and type(t[n])=="table"then
+e.sub[n]=l(t[n],o[n])if next(e.sub[n])==nil then
+e.sub[n]=nil
+end
+elseif t[n]~=o[n]then
+e.mod[n]=a
+end
+end
+if next(e.sub)==nil then
+e.sub=nil
+end
+if next(e.mod)==nil then
+e.mod=nil
+end
+if next(e.del)==nil then
+e.del=nil
+end
+return e
+end
+local function t(n,e)if e.sub~=nil then
+for e,o in pairs(e.sub)do
+n[e]=t(n[e],o)end
+end
+if e.del~=nil then
+for t,e in pairs(e.del)do
+n[e]=nil
+end
+end
+if e.mod~=nil then
+for t,e in pairs(e.mod)do
+n[t]=e
+end
+end
+return n
+end
+a.diff=l
+a.patch=t
+return a
+end)package.preload['src.app.Game.mSKGame.GS.Anim']=(function(...)if(not handler)then
+_import('..cc_ext.functions')end
+gonv(transition)local a={}table.merge(a,transition)local n={}local t
+t=function(o,t)local e=n[t]gonv(e)if(o==false)then
+e.status='dead'e.detail='failed'elseif(e.status=='failed')then
+e.detail='failed'e.status='dead'elseif(coroutine.status(t)=='dead')then
+e.status='dead'elseif(e.inst=='pause')then
+e.status='suspend'else
+e.status='running'end
+if(e.detail=='failed')then
+print(debug.traceback())return assert(false,'sdf Failed')end
+end
+local r
+r=function(e)local e=n[e]gonv(e)return(e.status~='dead'and e.status~='suspend')end
+local l
+l=function(e)local e=n[e]gonv(e)return(e.status=='dead')end
+local o
+o=function(t)local e=n[t]gonv(e)n[t]=nil
+if(e.detail=='failed')then
+return assert(false,'')end
+end
+local u
+u=function(a)return function()local e=coroutine.running()gonv(e)local n
+n=function()if(r(e))then
+local n=coroutine.resume(e)t(n,e)end
+if(l(e))then
+return o(e)end
+end
+a(n)coroutine.yield()e=coroutine.running()end
+end
+local c
+c=function(c,a,n)if(a==nil)then
+local e=1
+end
+gonv(a)gonv(c)return function()local e=coroutine.running()gonv(e)local i=n.onComplete
+n.onComplete=function()n.onComplete=i
+if(r(e))then
+local n=coroutine.resume(e)t(n,e)end
+if(l(e))then
+return o(e)end
+end
+c(a,n)e=coroutine.running()coroutine.yield()if(i)then
+i()end
+end
+end
+local d
+d=function(c,a,n)if(a==nil)then
+local e=1
+end
+gonv(a)gonv(c)return function()local e=coroutine.running()gonv(e)local i=n.onComplete
+n.onComplete=function()n.onComplete=i
+if(r(e))then
+local n=coroutine.resume(e)t(n,e)end
+if(l(e))then
+return o(e)end
+end
+local t=a()if(not t)then
+gonv(t)end
+c(t,n)e=coroutine.running()coroutine.yield()if(i)then
+i()end
+end
+end
+local i
+i=function(e)local t={status='baby',inst='continue'}local e=coroutine.create(e)t.co=e
+gonb(n[e]==nil)n[e]=t
+return t
+end
+local r
+r=function(n)local e=n.co
+n.inst='continue'n.status='running'local n=coroutine.resume(e)t(n,e)if(l(e))then
+return o(e)end
+end
+local e
+e=function(e)return gonb(false)end
+local t
+t=function(e,n)n=n or e.callback or function()return nil
+end
+local a={}local o={}if(e.R=='sq')then
+local l
+l=function(e)for o,e in ipairs(e)do
+if(type(e)=='table'and e.R)then
+t(e)n(o,e)else
+my.mxpcall(e)n(o,e)end
+end
+end
+local e=i(handler(e,l),function()return n(#e+1,e)end)r(e)table.append(o,e)elseif(e.R=='cb')then
+for l,e in ipairs(e)do
+if(type(e)=='table'and e.R)then
+t(e)else
+local t=i(e)r(t,function()return n(l,e)end)table.append(o,t)end
+end
+else
+gonb(false)end
+return a
+end
+local t=t
+local e={R='sq'}local n
+n=function(n)if(#e>0)then
+return table.append(e,n)else
+table.append(e,n)return t(e,function(n,t)if(n==#e)then
+e={R='sq'}end
+end)end
+end
+local l
+l=function()table.iclear(e)e={R='sq'}end
+local i
+i=function(e,l,o,t)if(t)then
+o.onComplete=t
+end
+if(type(e)=='string')then
+e=a[e]end
+if(type(e)=='function')then
+return n(c(e,l,o))end
+end
+table.merge(a,{apply=i,runAction=t,Ani=c,runThread=r,postAction=n,AsynFunc=u,AniFNode=d,abortAllActions=l})return a
+end)package.preload['src.app.Game.mSKGame.Logic.casegen']=(function(...)_import('..ext.table_ext')local o
+o=function()end
+local c
+c=function()end
+local e={}local r,i
+r=function(t,n,e)assert(type(e)=='table','')assert(type(n)=='number','')assert(type(t)=='number','')local a,l,o
+return function()if(o)then
+return nil
+end
+if(n>t)then
+return nil
+end
+if(n==0)then
+o=true
+return e
+elseif(n==1)then
+if(e[n]<t)then
+e[n]=e[n]+1
+return e
+else
+o=true
+return nil
+end
+elseif(n==t)then
+e[1]=1
+o=true
+return e
+end
+if(not a)then
+a=r(t-1,n-1,e)end
+if(a())then
+return e
+end
+if(not l)then
+l=i(t-1,n,e)end
+if(l())then
+return e
+end
+o=true
+end
+end
+i=function(t,n,e,o)assert(type(e)=='table','')assert(type(n)=='number','')assert(type(t)=='number','')local a,l,o
+return function()if(o)then
+return nil
+end
+if(n>t)then
+return nil
+end
+if(n==0)then
+o=true
+return e
+end
+if(n==1)then
+if(e[1]>1)then
+e[1]=e[1]-1
+return e
+else
+o=true
+return nil
+end
+elseif(n==t)then
+e[n]=t
+o=true
+return e
+end
+if(not a)then
+a=i(t-1,n-1,e)end
+if(a())then
+return e
+end
+if(not l)then
+l=r(t-1,n,e)end
+if(l())then
+return e
+end
+o=true
+end
+end
+local a
+a=function(e,t)assert(type(e)=='table','')assert(type(t)=='number','')assert(#e>=t and t>=0,'')local n=table.clone(e)assert(e~=n,'')local r=n[1]local e=0
+local l=nil
+return function()o('n ',t)if(e==3)then
+return nil
+end
+if(t==0)then
+e=3
+return nil
+end
+if(t==1)then
+o('kkkdd')c(n)local t=n[1]table.remove(n,1)o('dde')if(#n==0)then
+o('dde2')e=3
+end
+return{t}end
+if(#n==t and e==0)then
+o('rrrr')e=3
+return n
+end
+if(not l and e==0)then
+table.remove(n,1)o('ddddddddddd2')l=a(n,t-1)e=1
+end
+while(e==1)do
+o('ddddddddddd')local e=l()if(e)then
+table.insert(e,1,r)o('kksddsfk',t)c(n)return e
+else
+l=nil
+break
+end
+end
+if(not l and e==1)then
+o('rr')l=a(n,t)e=2
+end
+while(e==2)do
+local n=l()if(n)then
+return n
+else
+l=nil
+e=3
+break
+end
+end
+return nil
+end
+end
+local o
+o=function(t,e,n)assert(type(n)=='table','')assert(type(e)=='number','')assert(#n>=e and e>=0,'')if(#n==0)then
+for o=1,e do
+n[o]=t-e+o
+end
+end
+local l,a
+local r
+r=function()if(e==0 or t<e)then
+return nil
+elseif(e==1)then
+coroutine.yield(n)elseif(e==t)then
+coroutine.yield(n)return nil
+end
+if(not l)then
+l=o(t-1,e-1,n)end
+while(l())do
+e=e
+end
+for o=1,e do
+n[o]=t-e+o-1
+end
+if(not a)then
+a=o(t-1,e,n)end
+while(a())do
+e=e
+end
+return nil
+end
+return r
+end
+local d
+d=function(l,t)local e
+do
+local o={}local n=1
+for a=1,t do
+o[n]=l-t+a
+n=n+1
+end
+e=o
+end
+local t=coroutine.create(o(l,t,e))return function()local n=coroutine.status(t)if(n=='dead')then
+return nil
+end
+n,e=coroutine.resume(t)if(e==nil)then
+while(n)do
+n=coroutine.resume(t)end
+end
+return e
+end
+end
+local e
+e=function(n)local e=1
+for n=1,n do
+e=e*n
+end
+return e
+end
+local c
+c=function(t,n)assert(type(t)=='number'and type(n)=='number','')local e=e(t)/(e(n)*e(t-n))return e
+end
+local t
+t=function(n)local e=1
+for t,n in pairs(n)do
+e=e*n
+end
+return e
+end
+local f
+f=function(l,e)if(e==nil)then
+e={}table.fill_empty(e,#l,1)end
+local o
+do
+local t={}local n=1
+for l,a in ipairs(l)do
+t[n]=a-e[l]+1
+n=n+1
+end
+o=t
+end
+return t(o)end
+local u
+u=function(l,t)local o=#l
+if(t==nil)then
+t={}table.fill_empty(t,o,1)end
+local n=table.clone(t)n[1]=n[1]-1
+return function()local e=1
+n[e]=n[e]+1
+while(true)do
+if(e>o)then
+break
+elseif(n[e]>l[e])then
+n[e]=t[e]e=e+1
+if(e>o)then
+break
+end
+n[e]=n[e]+1
+else
+break
+end
+end
+if(e<=o)then
+return n
+else
+return nil
+end
+end
+end
+local l
+l=function(t)local a=#t
+local o
+do
+local n={}local e=1
+for l,t in ipairs(t)do
+n[e]=t[1]e=e+1
+end
+o=n
+end
+local n={}local r
+do
+local n={}local e=1
+for o,t in ipairs(t)do
+n[e]=#t
+e=e+1
+end
+r=n
+end
+table.fill_empty(n,#t,1)return function()local e=1
+local l=1
+while(true)do
+if(e>a)then
+break
+elseif(n[e]>r[e])then
+l=2
+n[e]=1
+o[e]=t[e][n[e]]e=e+1
+if(e<=a)then
+n[e]=n[e]+1
+o[e]=t[e][n[e]]end
+elseif(l>1)then
+l=1
+else
+local e=1
+o[e]=t[e][n[e]]n[e]=n[e]+1
+break
+end
+end
+if(e<=a)then
+return o
+else
+return nil
+end
+end
+end
+local s
+s=function(t)local l=#t
+t=table.clone(t)local r
+do
+local n={}local e=1
+for o,t in ipairs(t)do
+n[e]=t.cut
+e=e+1
+end
+r=n
+end
+for n,e in ipairs(t)do
+e.cut=nil
+end
+local o
+do
+local n={}local e=1
+for t,l in ipairs(t)do
+n[e]=a(l,r[t])e=e+1
+end
+o=n
+end
+local n
+do
+local t={}local e=1
+for l=2,l do
+t[e]=o[l]()e=e+1
+end
+n=t
+end
+table.insert(n,1,false)return function()local e=1
+n[e]=o[e]()while(true)do
+if(e>l)then
+break
+elseif(n[e]==nil)then
+o[e]=a(t[e],r[e])n[e]=o[e]()e=e+1
+if(e>l)then
+break
+end
+n[e]=o[e]()else
+break
+end
+end
+if(e<=l)then
+return n
+else
+return nil
+end
+end
+end
+local t
+t=function(e)local e=l(table.reverse(e))return function()local e=e()return e and table.reverse(e)end
+end
+local d=d
+local o
+o=function(e)local n=table.clone(e)local e
+local t=n.cut
+n.index=0
+assert(t>0,'')return function()while(true)do
+if(not e and status==1)then
+local n=a(n,t)e=l(n)end
+local n=e()if(n)then
+return n
+else
+e=nil
+end
+end
+end
+end
+return{cmixpair=d,allsetcomp=l,allsetcompr=t,casegen=o,imixpair_r=r,imixpair_l=i,count_Cnm=c,genrangecase=u,countrangecasesum=f,mixpair=a,allsetitercomp=s}end)package.preload['src.app.Game.mSKGame.ext.moon_support']=(function(...)local e
+e=function(e)if(not string.find(e,':'))then
+e='F:/OCode/mobile/sfgt_qyhz/Win32/scripts/src/app/Game/mSKGame/'..e
+end
+return lfs.chdir(e)end
+local n
+n=function(e)gonv(e)return print('>>> '..e..' !!!')end
+local l
+l=function(o,t)local l=lfs.currentdir()e(o)if(os.execute('moonc '..t..'.moon')~=0)then
+n('compile '..t..' in '..o..' failed')end
+return e(l)end
+local a
+a=function(o,t)local l=lfs.currentdir()e(o)if(os.execute('moonc '..t..'.moon')~=0)then
+n('compile '..t..' in '..o..' failed')end
+if(os.execute('lua -l '..t..' -v')~=0)then
+n('run '..t..' in '..o..' failed')end
+return e(l)end
+return{compile=l,run=a}end)package.preload['src.app.Game.mSKGame.GS.GridLayoutInfo']=(function(...)local f
+f=function(e)return{{e:getPosition()},e:getContentSize()}end
+local s
+s=function(e)return{e:getPosition()}end
+local u
+u=function(t)local n,e
+do
+local t=t:getContentSize()n,e=t.width,t.height
+end
+local o,l
+do
+local e=t:getAnchorPoint()o,l=e.x,e.y
+end
+return{-o*n,-l*e}end
+local l
+l=function(e)return tostring(e[1])..'_'..tostring(e[2])end
+local c={}do
+c.initWithSpecDesc=function(e,t,o,n)if n==nil then
+n={0,0}end
+e._startCorner=t[1]e._offset=table.clone(n)e._size=t[2]e._pixList={}e._pix_wx={}e._pix_hx={}local t,n
+t,n=o.width,o.height
+local o=e._size.height/n
+local a=e._size.width/t
+for n=1,t+1 do
+e._pix_wx[n]=(n-1)*a
+end
+for n=1,n+1 do
+e._pix_hx[n]=(n-1)*o
+end
+for t=1,t+1 do
+for n=1,n+1 do
+e._pixList[l({t,n})]={e._pix_wx[t],e._pix_hx[n]}end
+end
+end
+c.getLocation=function(n,e,t)local l,o
+l,o=e[1],e[2]local a,r
+a,r=t[1],t[2]local t,e
+do
+local n=n._offset
+t,e=n[1],n[2]end
+l=l-a-t
+o=o-r-e
+local e,t
+if(l<n._pix_wx[1])then
+e=0
+else
+local t
+t,e=table.findfvalue(n._pix_wx,l,(function(n,e)return n>=e
+end))e=(e and e-1)or#n._pix_wx
+end
+if(o<n._pix_hx[1])then
+t=0
+else
+local e
+e,t=table.findfvalue(n._pix_hx,o,(function(n,e)return n>=e
+end))t=(t and t-1)or#n._pix_hx
+end
+if(e and t)then
+return{e,t}end
+end
+end
+local d
+d=function(o,t,e,n)local a=n.width
+local i=n.height
+gonb(e[1]<=a+1 and e[2]<=i+1)gonb(e[1]>=0 and e[2]>=0)print('origin: ',t[2],t[3])local e,n=e[1],e[2]local l=1
+for n,e in ipairs(o)do
+if(#e==0)then
+l=l+1
+else
+break
+end
+end
+local r=#o
+e=(e<l and l-1)or(e>r and r+1)or e
+e=(e>a and a)or(e<1 and 1)or e
+n=(n==0 and 1)or(n==i+1 and i)or n
+e=(e==0 and 1)or(e==a+1 and a)or e
+local a=true
+if(not o[e])then
+n=1
+local n=t[2]if(#o[n]==1)then
+if(e<l and n==l)then
+e=l
+elseif(e>r)then
+e=r
+end
+end
+a=false
+elseif(e==t[2])then
+local t=t[3]local e=#o[e]n=(n>e and t<=n and e)or(n>e and t>n and e-1)or n
+a=false
+elseif(#o[e]<i)then
+local l=#o[e]n=(n>l and l+1)or n
+local n=t[2]if(n<e and#o[n]==1)then
+e=e-1
+end
+a=false
+end
+if(a)then
+e=t[2]n=t[3]end
+return{e,n},(not a)end
+local e
+e=function()local e={}table.extend(e,c)return e
+end
+return{create=e,BlockNode=f,PosNode=s,AncOffset=u,calcTightPos=d}end)package.preload['src.app.Game.mSKGame.GS.Scope']=(function(...)local e=import('.IDMetaManager')local r=import('.Matrix2')local n=import('.NSM')local function m(n,t)assert(n,'')assert(t,'')local e=e.getMeta(n,'container')local n
+if(type(e)=='function')then
+e=e()end
+n=e:seekNodeByName(t)assert(n~=nil,'node is nil !!!')return n
+end
+local function s(t,n)local e=e.getMeta('_common','stuffs')assert(type(e)=='table','')local t
+for n,t in pairs(n)do
+if(e[n]==nil or e[n]~=name)then
+e[n]=t
+end
+end
+end
+local function y(t,n)local e=e.getMeta('_common','stuffs')assert(#e>=#n)table.exclude(e,n)end
+local function p(t,n)assert(type(n=='table')or type(n)=='userdata','')assert(n.addChild and n.seekNodeByName,'')e.setMeta(t,'container',n)end
+local function x(e,t,n)s(e,t)p(e,n)end
+local function a(e)return tostring(e[1])..'_'..tostring(e[2])end
+local function d(t,e,n)n:setStatus({areaid=t,lifestage='unuse',nodeid=e})end
+local function h(t,n)local o=e.getMeta('_common','stuffs')local o=o[n]if(not o)then
+local e='stuff for nodeid: <'..tostring(n)..'> of <'..tostring(t)..'> not exist !!'dumptofile(e,'error reason')print('error reason: '..e)end
+local o=o(t,n)o:setStatus({nodeid=n,areaid=t,lifestage='touse'})local e=e.getMeta(t,'css')local n=o:getStuff()e.resetObjMeta(n)return o
+end
+local function b(l,n)print('start check children')local t=e.getMeta(l,'nodeMap')local o=t or{}assert(type(o)=='table','')assert(type(n)=='table','')local t=table.keys(o)if(#t~=#n)then
+local e=i
+end
+if(#t~=#n)then
+local e=1
+end
+assert(#t==#n,'')table.sort(t)table.sort(n)local e=e.getMeta(l,'container')assert(e,'')for t,n in ipairs(o)do
+if(e~=n:getParent())then
+dumptofile(t,'node not exist')end
+assert(e==n:getParent(),'')end
+print('ended check children')end
+local function n(n)local t=e.getMeta(n,'matrix')local t=r.mergeToTable(t)local e=e.getMeta(n,'nodeMap')local e=table.keys(e or{})assert(#t==#e,'')end
+local function _(l,t)local e=e.getMeta(l,'nodeMap')if(e==nil and next(t)==nil)then return end
+local c=#table.keys(e)or 0
+local n,r
+assert(type(e)=='table','')assert(#t<=#e,'')local o
+for i,t in pairs(t)do
+o=i.nodeid
+n=a(t)if(e[n]==nil)then
+dumptofile(o,'nodeid')dumptofile(e,'nodeMap')end
+assert(e[n]~=nil,'')r=e[n]e[n]:getStuff():removeFromParent(true)table.removeItem(e,n)d(l,o,r)end
+local e=#table.keys(e)assert(c==(e+#table.keys(t)),'')end
+local function g(t,r)local c=e.getMeta(t,'matrix')local o=e.getMeta(t,'nodeMap')if(o==nil)then
+o={}e.setMeta(t,'nodeMap',o)end
+local u=#table.keys(o)local f=e.getMeta(t,'container')local n,l,d,i
+assert(type(o)=='table','')local e=e.getMeta(t,'css')local s=e.convPos(t,r,c)local e
+for c,r in pairs(r)do
+e=c.nodeid
+l=s[c]d=a(r)i=h(t,e)n=i:getStuff()if(n==nil)then
+dumptofile(t..':   '..e)dumptofile(stuffs)end
+assert(n,'')if(n:getParent())then
+n:removeFromParent()end
+f:addStuffChild(n,r,e)o[d]=i
+n:setPosition(l)n:setLocalZOrder((20-r[2])or n:getLocalZOrder())local e=cc.p(n:getPosition())assert(l['x']==e['x']and l['y']==e['y'],'set position failed !')n=nil
+end
+local e=#table.keys(o)assert(u==(e-#table.keys(r)),'')end
+local function k(r,l)local n=e.getMeta(r,'nodeMap')if(n==nil and next(l)==nil)then return end
+local s=#table.keys(n)assert(n~=nil,'')assert(#l<=#n,'')local d,c,t,o
+local i=e.getMeta(r,'matrix')local e=e.getMeta(r,'css')local p=e.convPos(r,l,i)local e={}local i,r
+for l,r in pairs(l)do
+i=l.nodeid
+t=a(l)if(n[t]==nil)then
+n[t]=o
+end
+assert(n[t]~=nil,'')o=n[t]table.removeItem(n,t)e[t]=o
+end
+for u,f in pairs(l)do
+t=a(u)c=a(f)i=l.nodeid
+d=p[u]o=e[t]n[c]=o
+table.removeItem(e,t)r=o:getStuff()r:setPosition(d)r:setLocalZOrder((20-f[2])or o:getLocalZOrder())end
+assert(#table.keys(e)==0,'')local e=#table.keys(n)assert(s==e,'')end
+local function o(n)local e=e.getMeta(n,'nodeMap')local e=table.values(e)return e
+end
+local function t(t,n)local t=e.getMeta(t,'nodeMap')local e=a(n)local e=t[e]return e
+end
+local n=e.getMeta('_common','stuffs')if(not n)then
+n={}e.setMeta('_common','stuffs',n)if(not e.getMeta('_common','stuffsCache'))then
+e.setMeta('_common','stuffsCache',{})end
+end
+local e={addStuff=s,removeStuff=y,setContainer=p,init=x,addNodes=g,removeNodes=_,updateNodesPos=k,getNodeWithStuff=h,pickNodeByName=m,openTask=openTask,closeTask=closeTask,applyTask=applyTask,seekObjByID=o,checkChildren=b,_applyLayout=_applyLayout,seekNode=t,}return e
+end)package.preload['src.app.Game.mSKGame.Logic.Set']=(function(...)import('..ext.table_ext')local e=function(t,e,n)for o=1,#n do
+e=t(e,n[o])end
+return e
+end
+table.foldl=e
+local e=_import('..Logic.casegen_ext')local o=function(...)return...end
+local l=e.allsetitercomp
+local a=function(n,t,e)if(n)then
+e[#e+1]=table.clone(t)end
+end
+local function t(e,n)local e=e.config
+local t=e.setstyle
+local r=e.setstrip or o
+local l=e.casegen or l
+local o=e.selassert
+local a=e.procout or a
+assert(type(o)=='function','')if(t)then n=t(n)end
+local e=r(n)if(not e)then return{}end
+local t=l(e)local e
+local n={}for t in t do
+e=o(t)if(type(e)=='table')then
+e=table.foldl(function(n,e)assert(type(e)=='function','')return n or e()end,false,e)end
+a(e,t,n)end
+return n
+end
+local function n(e)local e={strip=t,gen=t,config=table.clone(e)}return e
+end
+local e={genStriper=n,}return e
+end)package.preload['src.app.Game.mSKGame.GS.CacheMG']=(function(...)local e={}do
+e._stuffcache=nil
+e._stuffinuse=nil
+e.onadd=function(n)end
+e.ondel=function(n)end
+e.onget=function(n)return n
+end
+e.onnew=function()end
+e.onrecycle=function(n)end
+e.addStuffCache=function(t,n)for n,e in ipairs(n)do
+t.onadd(e)end
+return table.iextend(t._stuffcache,n)end
+e.addStuff=function(t,n)t.onadd(n)table.append(t._stuffcache,n)return t:markUnuse(n)end
+e.getStuff=function(t)local n=t._stuffcache[1]if not n then
+n=t.onnew()t:addStuff(n)end
+n=n and t.onget(n)t:removeStuffCache()t:markInuse(n)return n
+end
+e.markInuse=function(n,t)n._stuffinuse[t]=true
+end
+e.markUnuse=function(n,t)return table.removeItem(n._stuffinuse,t)end
+e.removeStuffCache=function(n)local t=n._stuffcache[1]n.ondel(t)return table.remove(n._stuffcache,1)end
+e.recycleStuffForce=function(n,t)n.onrecycle(t)n.ondel(t)return n:addStuff(t)end
+e.recycleAllStuffForce=function(n)for e,t in pairs(n._stuffinuse)do
+n:recycleStuffForce(e)end
+end
+e.clearAllStuffCaches=function(n)while(#n._stuffcache>0)do
+n:removeStuffCache()end
+end
+e.exec=function(n,e)for t,n in ipairs(n._stuffcache)do
+e(n,i)end
+for t,n in ipairs(n._stuffinuse)do
+e(n,i)end
+end
+end
+local n
+n=function()local n={_stuffcache={},_stuffinuse={}}setmetatable(n,{__index=e})return n
+end
+return n
+end)package.preload['src.app.Game.mSKGame.GS.IDMetaManager']=(function(...)local e=import('.Matrix2')local n={}local function t(e)return n[e]end
+local function l(e,o)if(t(e)==nil)then
+n[e]={}end
+return t(e)[o]end
+local function a(n,e,o)local n=t(n)n[e]=o
+end
+local function o(e)local o=e.layout
+local a=e.css
+local l=e.updater
+local t=e.stuffs
+local t=e.id
+local r=e.scope
+local e={layout=o,css=a,updater=l,id=t,scope=r,direction=e.direction,}if(n[t]==nil)then
+n[t]={}end
+table.merge(n[t],e)end
+local function e(e)for n,e in ipairs(e)do
+o(e)end
+end
+local e={getMeta=l,setMeta=a,updateConfig=o,updateConfigs=e,_ConfigBuffer=n,}return e
+end)package.preload['src.app.Game.mSKGame.GS.AGM']=(function(...)local t=import('.IDMetaManager')local e=import('..Mediator')local o=import('.Matrix2')local e=import('.ScopeTask')local function u(n)e.stopTask(n)local l=t.getMeta(n,'layout')local t=t.getMeta(n,'matrix')if(t~=nil)then
+l.update(n,o.createEmpty(t))end
+local e=e.getTask()return e()end
+local o={}local function d(n)if(n)then
+gontype(n,'table')local e={}for l,t in ipairs(n)do
+if(o[t])then
+e[t]=true
+end
+end
+n=e
+else
+n=o
+end
+dumptofile(n,'ids to clear')for n,t in pairs(n)do
+e.stopTask(n)end
+e.clearTasksForce()for e,n in pairs(n)do
+u(e)end
+end
+local function c()for n,t in pairs(o)do
+e.stopTask(n)end
+e.clearTasksForce()end
+local function _(e)d(e)end
+local function a(n,o)local e=t.getMeta(n,'layout')if(e==nil)then
+end
+e.update(n,o)end
+local function b(e,o)local n=t.getMeta(e,'css')n.apply(e,o)end
+local function p(e)local n
+for e,o in pairs(e)do
+n=t.getMeta(e,'css')n.apply(e,o)end
+end
+local function r(n,t)a(n,t)local e=e.getTask()return e
+end
+local function f(n)e.openTask()for t,n in pairs(n)do
+if(#n>0)then
+local e=i
+end
+a(t,n)end
+e.closeTask()local e=e.getTask()return e
+end
+local function i(e,n)local e=r(e,n)e()end
+local function s(e)local e=f(e)e()end
+local function h(e,o)local n=t.getMeta(e,'scope')n.addStuff(e,o)end
+local function n(e,n)local t=t.getMeta(e,'scope')t.removeStuff(e,n)end
+local function g(e,n)local t=t.getMeta(e,'scope')t.setContainer(e,n)end
+local function m(n)local l={}e.openTask()for o,n in pairs(n)do
+local e=function(e)local e='src.app.Game.mSKGame.GS.'..n[e]if(not package.loaded[e])then
+return require(e)else
+return package.loaded[e]end
+end
+local r=e('layout')local o=e('css')local e=e('scope')n['layout']=r
+n['css']=o
+n['scope']=e
+t.updateConfig(n)local e=n.id
+local i=n['stuffs']local c=n['container']local r=n['matrix']local n=n['dss']local t=t.getMeta(e,'scope')t.init(e,i,c)if(n)then
+o.loadCSS(e,n)end
+a(e,r)l[#l+1]=e
+end
+e.closeTask()local e=e.getTask()e()for n,e in ipairs(l)do
+o[e]=true
+end
+end
+local function e()return bm.getMeta('_css_common','selector')end
+local function n(e,e)end
+local function n(e)end
+local e={updateLayout=i,updateLayouts=s,updateStyles=p,updateStyle=b,addStuff=h,setContainer=g,setWithGridInfo=m,clearAllLayout=d,clearLayout=u,getCssSelector=e,divLayout=r,divLayouts=f,stopAndClearAll=_,stopAllTask=c,clearAllTask=c,checkLayout=n,}return e
+end)package.preload['src.app.Game.mSKGame.GS.VCacheMG']=(function(...)local e={}do
+e._stuffcache=nil
+e._stuffinuse=nil
+e.onadd=function(n)end
+e.ondel=function(n)end
+e.onget=function(n)return n
+end
+e.onnew=function(n,n)end
+e.onrecycle=function(n)end
+e.addStuffCache=function(n,t)for t,e in ipairs(t)do
+n.onadd(e)end
+return table.merge(n._stuffcache,t)end
+e.addStuff=function(n,t,o)n.onrecycle(t)if(n._stuffinuse[t])then
+n:markUnuse(t,o)end
+if(n._stuffcache[o])then
+return n.ondel(t)else
+n.onadd(t)n._stuffcache[o]=t
+end
+end
+e.getStuff=function(t,l,o)local n=t._stuffcache[o]if not n then
+n=t.onnew(l,o)t:addStuff(n,o)end
+n=n and t.onget(n)t:giveStuffCache(o)t:markInuse(n,o)return n
+end
+e.markInuse=function(n,t,o)n._stuffinuse[t]=o
+end
+e.markUnuse=function(n,t,o)return table.removeItem(n._stuffinuse,t)end
+e.giveStuffCache=function(t,n)local o=t._stuffcache[n]return table.removeItem(t._stuffcache,n)end
+e.removeStuffCache=function(n,t)local o=n._stuffcache[t]table.removeItem(n._stuffcache,t)return n.ondel(o)end
+e.recycleStuffForce=function(t,n,o)return t:addStuff(n,o)end
+e.recycleAllStuffForce=function(n)for e,t in pairs(n._stuffinuse)do
+n:recycleStuffForce(e,t)end
+end
+e.clearAllStuffCaches=function(n)for e,t in pairs(n._stuffcache)do
+n:removeStuffCache(e)end
+end
+e.exec=function(e,n)for t,e in ipairs(e._stuffcache)do
+n(e,i)end
+for t,e in ipairs(e._stuffinuse)do
+n(e,i)end
+end
+end
+local n
+n=function()local n={_stuffcache={},_stuffinuse={}}setmetatable(n,{__index=e})return n
+end
+return n
+end)package.preload['src.app.Game.mSKGame.DB.LDB']=(function(...)local a={}local e={}setmetatable(a,e)local l={lock=function(e)return rawset(e,'__locked',true)end,unlock=function(e)return rawset(e,'__locked',false)end,set_strict=function(e,n)return rawset(e,'__strict',n)end,__strict=true,__locked=false}local o
+local t={__index=function(e,t)if(not rawget(e,t))then
+local n={}table.merge(n,l)n.__strict=e.__strict
+n.__locked=e.__locked
+setmetatable(n,o)rawset(e,t,n)end
+return rawget(e,t)end,__newindex=function(e,t,n)if(rawget(e,'__locked'))then
+if(rawget(e,'__strict'))then
+return error('locked sheet')else
+return printError('locked sheet')end
+else
+return rawset(e,t,n)end
+end}o={}table.merge(o,t)local n
+n=function(n)assert(n,'')local e={}table.merge(e,l)a[n]=e
+setmetatable(e,t)return e
+end
+return{createDB=n}end)package.preload['src.app.Game.mSKGame.CocosExt.UICacheMode']=(function(...)local e=_import('..GS.WellCacheMG')local t
+t=function()local n=e()local e={ondel=function(e)print('retaintime ',e.retaintime)assert(e.retaintime==1,'')assert(e:getParent()==nil,'')e:release()return assert(e.retaintime==0,'')end,onnew=function(e)local e=cc.CSLoader:createNode(e):retain()local t=e.retain
+local n=e.release
+e.retaintime=0
+e.retain=function(n)e.retaintime=e.retaintime+1
+return t(e)end
+e.release=function(t)e.retaintime=e.retaintime-1
+return n(e)end
+e:retain()return e
+end,onrecycle=function(e)print('retaintimes : '..e.retaintime)if(e:getParent())then
+return e:removeSelf()end
+end}table.merge(n,e)return n
+end
+return{createUIVCacheMG=t}end)package.preload['src.app.Game.mSKGame.GS.TreeM']=(function(...)local f=_import('..ext.Tree')local e=_import('.Matrix2')local n
+n=function(e)local t={}for l,e in pairs(e)do
+local n
+local o=#e-1
+for o=1,o<0 and#e+o or o do
+local e=e[o]n=t[e]if not n then
+t[e]={}n=t[e]end
+end
+n[e[#e]]=l
+end
+return t
+end
+local n
+n=function(t,o)for n,l in ipairs(t)do
+local n=o[n]t=e.imergeToTable(l)o=e.imergeToTable(n)gonb(table.containSame(t,o))for o,t in ipairs(l)do
+local e=false
+repeat
+if((not t)or#t==0)then
+gonb(n[o]==nil or#n[o]==0)e=true
+break
+end
+for t,l in ipairs(t)do
+gonb(n[o][t]==l)end
+e=true
+until true
+if not e then
+break
+end
+end
+end
+end
+local o
+o=function(e)local n=e._tree
+local n=makeReflactMap(n)local e=e._tree_reflact
+for t,o in pairs(n)do
+if(type(t)~='number')then
+if(not table.equal(e[t],n[t]))then
+assert(false,'')end
+end
+end
+for t,o in pairs(e)do
+if(type(t)~='number')then
+if(not table.equal(e[t],n[t]))then
+assert(false,'')end
+end
+end
+end
+local r
+r=function(n,t,l)o(n)local c={}local i=n._tree
+local a=n._tree_reflact
+for e,t in ipairs(t)do
+if(type(t)=='table')then
+r(n,t,l)else
+local e=a[t]if(e~=nil)then
+local o=e[1]local n=i
+for t=1,#e-1 do
+n=n[e[t]]end
+local r=e[#e]c[o]=i[o]l[t]=e
+table.removeItem(a,t)for t=r+1,#n do
+local e=a[n[t]]gonb(e[#e]==t)e[#e]=t-1
+end
+table.remove(n,r)end
+end
+end
+local t=false
+for o,n in pairs(c)do
+local o=#n
+e.strip(n,{false,{}})if(#n~=o)then
+t=true
+end
+end
+if(t)then
+n._tree_reflact=makeReflactMap(i)end
+o(n)return l
+end
+local d
+d=function(t,n,e)e=e or{}return r(t,n,e)end
+local r
+r=function(t,n,o)local l=o[1]local a=t._tree[l]for i,n in ipairs(n)do
+if(type(n)=='table')then
+r(t,n,o)else
+local e=e.getIndex(a,n)if(e==nil)then
+assert(false,'')end
+t._tree_reflact[n]={l,e[1],e[2]}end
+end
+end
+local u
+u=function(e)local n={}n._tree=e
+n._tree_reflact=makeReflactMap(e)setmetatable(n,{__index=e,__newindex=e})return n
+end
+local c
+c=function(a,t,i,l)o(a)assert(l,'')local n=i[1]local n=a._tree[n]if(l=='append')then
+e.appendItem(n,t[1])assert(#n==1 and#n[1]==1 and#t==1,'')elseif(l=='add')then
+assert(#t==1,'')if(not e.containedElement(n,t[1]))then
+e.addItem(n,t[1])end
+elseif(l=='appendRaws')then
+e.appendRaws(n,t)else
+assert(false,'')end
+e.check(n)r(a,t,i)o(a)return n
+end
+local o
+o=function(e,n)if(e._tree_reflact[n])then
+return table.clone(e._tree_reflact[n])else
+return nil
+end
+end
+local a
+a=function(t,n)local e={}f.foreach_deep(n,function(n)e[n]=o(t,n)end)return e
+end
+local l
+l=function(e,n)table.merge(e._tree,n)e._tree_reflact=makeReflactMap(e._tree)end
+local i
+i=function(e,n)local e=e._tree
+for t=1,#n do
+local n=n[t]e=e[n]if(not e)then
+return
+end
+end
+return e
+end
+local r
+r=function(n,e)if(#e==0)then
+return
+end
+local n=n._tree
+local t=#e-1
+for t=1,t<0 and#e+t or t do
+local e=e[t]if(not n[e])then
+n[e]={}end
+n=n[e]end
+end
+local f
+f=function(t,n,o)if(not i(t,n))then
+r(t,n)end
+return e.insertItem(t._tree[n[1]],{n[2],n[3]},o)end
+local n
+n=function(e)e._tree_reflact=makeReflactMap(e._tree)end
+local e
+e=function(e)return e._tree
+end
+return{delItems=d,create=u,addItems=c,getIndex=o,findallindex=a,refresh=n,update=l,insertItem=f,getTree=e}end)package.preload['src.app.Game.mSKGame.cc_ext.functions']=(function(...)function printLog(e,n,...)local e={"[",string.upper(tostring(e)),"] ",string.format(tostring(n),...)}print(table.concat(e))end
+function printError(e,...)printLog("ERR",e,...)print(debug.traceback("",2))end
+function printInfo(e,...)if type(DEBUG)~="number"or DEBUG<2 then return end
+printLog("INFO",e,...)end
+local function n(e)if type(e)=="string"then
+e='"'..e..'"'end
+return tostring(e)end
+function dump(s,f,a)if type(a)~="number"then a=3 end
+local d={}local e={}local t=string.split(debug.traceback("",2),"\n")print("dump from: "..string.trim(t[3]))local function c(l,t,o,i,u)t=t or"<var>"local r=""if type(u)=="number"then
+r=string.rep(" ",u-string.len(n(t)))end
+if type(l)~="table"then
+e[#e+1]=string.format("%s%s%s = %s",o,n(t),r,n(l))elseif d[tostring(l)]then
+e[#e+1]=string.format("%s%s%s = *REF*",o,n(t),r)else
+d[tostring(l)]=true
+if i>a then
+e[#e+1]=string.format("%s%s = *MAX NESTING*",o,n(t))else
+e[#e+1]=string.format("%s%s = {",o,n(t))local d=o.."    "local t={}local a=0
+local r={}for e,o in pairs(l)do
+t[#t+1]=e
+local n=n(e)local n=string.len(n)if n>a then a=n end
+r[e]=o
+end
+table.sort(t,function(e,n)if type(e)=="number"and type(n)=="number"then
+return e<n
+else
+return tostring(e)<tostring(n)end
+end)for t,n in ipairs(t)do
+c(r[n],n,d,i+1,a)end
+e[#e+1]=string.format("%s}",o)end
+end
+end
+c(s,f,"- ",1)for n,e in ipairs(e)do
+print(e)end
+end
+function printf(e,...)print(string.format(tostring(e),...))end
+function checknumber(e,n)return tonumber(e,n)or 0
+end
+function checkint(e)return math.round(checknumber(e))end
+function checkbool(e)return(e~=nil and e~=false)end
+function checktable(e)if type(e)~="table"then e={}end
+return e
+end
+function isset(e,t)local n=type(e)return(n=="table"or n=="userdata")and e[t]~=nil
+end
+local t
+t=function(n,o)if type(n)=="userdata"then
+local e=tolua.getpeer(n)if not e then
+e={}tolua.setpeer(n,e)end
+t(e,o)else
+local e=getmetatable(n)if not e then e={}end
+if not e.__index then
+e.__index=o
+setmetatable(n,e)elseif e.__index~=o then
+t(e,o)end
+end
+end
+setmetatableindex=t
+function clone(l)local t={}local function o(e)if type(e)~="table"then
+return e
+elseif t[e]then
+return t[e]end
+local n={}t[e]=n
+for t,e in pairs(e)do
+n[o(t)]=o(e)end
+return setmetatable(n,getmetatable(e))end
+return o(l)end
+function class(o,...)local e={__cname=o}local n={...}for t,n in ipairs(n)do
+local t=type(n)assert(t=="nil"or t=="table"or t=="function",string.format('class() - create class "%s" with invalid super class type "%s"',o,t))if t=="function"then
+assert(e.__create==nil,string.format('class() - create class "%s" with more than one creating function',o));e.__create=n
+elseif t=="table"then
+if n[".isclass"]then
+assert(e.__create==nil,string.format('class() - create class "%s" with more than one creating function or native class',o));e.__create=function()return n:create()end
+else
+e.__supers=e.__supers or{}e.__supers[#e.__supers+1]=n
+if not e.super then
+e.super=n
+end
+end
+else
+error(string.format('class() - create class "%s" with invalid super type',o),0)end
+end
+e.__index=e
+if not e.__supers or#e.__supers==1 then
+setmetatable(e,{__index=e.super})else
+setmetatable(e,{__index=function(t,n)local e=e.__supers
+for t=1,#e do
+local e=e[t]if e[n]then return e[n]end
+end
+end})end
+if not e.ctor then
+e.ctor=function()end
+end
+e.new=function(...)local n
+if e.__create then
+n=e.__create(...)else
+n={}end
+setmetatableindex(n,e)n.class=e
+n:ctor(...)return n
+end
+e.create=function(n,...)return e.new(...)end
+return e
+end
+local t
+t=function(e,n)local o=rawget(e,"__index")if type(o)=="table"and rawget(o,"__cname")==n then return true end
+if rawget(e,"__cname")==n then return true end
+local e=rawget(e,"__supers")if not e then return false end
+for o,e in ipairs(e)do
+if t(e,n)then return true end
+end
+return false
+end
+function iskindof(e,l)local o=type(e)if o~="table"and o~="userdata"then return false end
+local n
+if o=="userdata"then
+if tolua.iskindof(e,l)then return true end
+n=tolua.getpeer(e)else
+n=getmetatable(e)end
+if n then
+return t(n,l)end
+return false
+end
+function import(l,o)local e
+local t=l
+local n=1
+while true do
+if string.byte(l,n)~=46 then
+t=string.sub(l,n)if e and#e>0 then
+t=table.concat(e,".").."."..t
+end
+break
+end
+n=n+1
+if not e then
+if not o then
+local n,e=debug.getlocal(3,1)o=e
+end
+e=string.split(o,".")end
+table.remove(e,#e)end
+return require(t)end
+function handler(e,n)return function(...)return n(e,...)end
+end
+function math.newrandomseed()local n,e=pcall(function()return require("socket")end)if n then
+math.randomseed(e.gettime()*1e3)else
+math.randomseed(os.time())end
+math.random()math.random()math.random()math.random()end
+function math.round(e)e=checknumber(e)return math.floor(e+.5)end
+local e=math.pi/180
+function math.angle2radian(n)return n*e
+end
+local e=math.pi*180
+function math.radian2angle(n)return n/e
+end
+function io.exists(e)local e=io.open(e,"r")if e then
+io.close(e)return true
+end
+return false
+end
+function io.readfile(e)local e=io.open(e,"r")if e then
+local n=e:read("*a")io.close(e)return n
+end
+return nil
+end
+function io.writefile(n,t,e)e=e or"w+b"local e=io.open(n,e)if e then
+if e:write(t)==nil then return false end
+io.close(e)return true
+else
+return false
+end
+end
+function io.pathinfo(t)local e=string.len(t)local n=e+1
+while e>0 do
+local t=string.byte(t,e)if t==46 then
+n=e
+elseif t==47 then
+break
+end
+e=e-1
+end
+local o=string.sub(t,1,e)local t=string.sub(t,e+1)n=n-e
+local e=string.sub(t,1,n-1)local n=string.sub(t,n)return{dirname=o,filename=t,basename=e,extname=n}end
+function io.filesize(e)local n=false
+local e=io.open(e,"r")if e then
+local t=e:seek()n=e:seek("end")e:seek("set",t)io.close(e)end
+return n
+end
+string._htmlspecialchars_set={}string._htmlspecialchars_set["&"]="&amp;"string._htmlspecialchars_set['"']="&quot;"string._htmlspecialchars_set["'"]="&#039;"string._htmlspecialchars_set["<"]="&lt;"string._htmlspecialchars_set[">"]="&gt;"function string.htmlspecialchars(e)for t,n in pairs(string._htmlspecialchars_set)do
+e=string.gsub(e,t,n)end
+return e
+end
+function string.restorehtmlspecialchars(e)for n,t in pairs(string._htmlspecialchars_set)do
+e=string.gsub(e,t,n)end
+return e
+end
+function string.nl2br(e)return string.gsub(e,"\n","<br />")end
+function string.text2html(e)e=string.gsub(e,"\t","    ")e=string.htmlspecialchars(e)e=string.gsub(e," ","&nbsp;")e=string.nl2br(e)return e
+end
+function string.split(e,n)e=tostring(e)n=tostring(n)if(n=='')then return false end
+local t,o=0,{}for n,l in function()return string.find(e,n,t,true)end do
+table.insert(o,string.sub(e,t,n-1))t=l+1
+end
+table.insert(o,string.sub(e,t))return o
+end
+function string.ltrim(e)return string.gsub(e,"^[ \t\n\r]+","")end
+function string.rtrim(e)return string.gsub(e,"[ \t\n\r]+$","")end
+function string.trim(e)e=string.gsub(e,"^[ \t\n\r]+","")return string.gsub(e,"[ \t\n\r]+$","")end
+function string.ucfirst(e)return string.upper(string.sub(e,1,1))..string.sub(e,2)end
+local function n(e)return"%"..string.format("%02X",string.byte(e))end
+function string.urlencode(e)e=string.gsub(tostring(e),"\n","\r\n")e=string.gsub(e,"([^%w%.%- ])",n)return string.gsub(e," ","+")end
+function string.urldecode(e)e=string.gsub(e,"+"," ")e=string.gsub(e,"%%(%x%x)",function(e)return string.char(checknumber(e,16))end)e=string.gsub(e,"\r\n","\n")return e
+end
+function string.utf8len(e)local n=string.len(e)local n=n
+local o=0
+local t={0,192,224,240,248,252}while n~=0 do
+local l=string.byte(e,-n)local e=#t
+while t[e]do
+if l>=t[e]then
+n=n-e
+break
+end
+e=e-1
+end
+o=o+1
+end
+return o
+end
+function string.formatnumberthousands(e)local e=tostring(checknumber(e))local n
+while true do
+e,n=string.gsub(e,"^(-?%d+)(%d%d%d)",'%1,%2')if n==0 then break end
+end
+return e
+end
+toint=checkint
+end)package.preload['src.app.Game.mSKGame.ext.init']=(function(...)_import('.table_ext')local e=_import('.tablex')_G.tablex=e
+_import('.vdump')local n=_import('.functions')_import('.ccext')_G.dump=vdump
+_G.sdump=sdump
+local e=_import('..ext.atest')table.merge(_G,e)local e=_import('.moon_support')table.merge(_G,e)table.merge(_G,n)end)package.preload['src.app.Game.mSKGame.cc_ext.vnode']=(function(...)local e=_import('.UIHelper')_G.seekNodeByName=e.seekNodeByName
+local e={_name=nil,_pos={0,0},_parent=nil,_children=nil,__init=function(e)e._children={}end,getName=function(e)return e._name
+end,getPosition=function(e)return e._pos
+end,setPosition=function(n,e)n._pos=e
+end,retain=function()return nil
+end,getParent=function(e)return e._parent
+end,setParent=function(n,e)n._parent=e
+end,removeFromParent=function(e)return e._parent:removeChild(e)end,removeChild=function(n,e)table.removebyvalue(n._children,e)e._parent=nil
+end,addChild=function(n,e)if(e._parent==n)then
+return
+elseif(e._parent==nil)then
+e:setParent(n)return table.append(n._children,e)else
+return assert(false,'')end
+end,getChildren=function(e)return e._children
+end,seekNodeByName=function(e,n)return seekNodeByName(e,n)end}return e
+end)package.preload['src.app.Game.mSKGame.logsys.vdump']=(function(...)local o=_tostring
+if(not o)then
+o=tostring
+end
+local t=print
+local r
+local function n(e,...)if(r)then
+r[#r+1]=e
+else
+t(e,...)end
+end
+local function e(e,...)if(type(e)=='table')then
+n(o(e),...)else
+n(e,...)end
+end
+local function i(e)if(string.find(e,"'",nil,true))then
+e=string.gsub(e,'"','\\"')return'"'..e..'"'else
+return"'"..e.."'"end
+end
+local function l(t,a,n)assert(l~=e,'')if type(n)~="string"then
+n=""end
+if(type(t)=='nil')then
+e(n..'nil')elseif type(t)=='boolean'then
+e(n..o(t))elseif type(t)~="table"then
+e(n..i(t))else
+e(n..tostring(t))if a~=0 then
+local o=n.."    "e(n.."{")if(getmetatable(t))then
+io.stdout:write(o..'meta')e(getmetatable(t))end
+for t,n in pairs(t)do
+if(type(t)=='number')then
+io.stdout:write(o..'['..t..']'.." = ")elseif(type(t)=='table')then
+io.stdout:write(o..'[[<\n')l(t,a,o)io.stdout:write(o..'>]] = \n')else
+io.stdout:write(o..t.." = ")end
+if type(n)~="table"or(type(a)=="number"and a<=1)then
+if(type(n)=='string')then
+e(i(n))else
+e(n)end
+else
+if a==nil then
+l(n,nil,o)else
+l(n,a-1,o)end
+end
+end
+e(n.."}")end
+end
+end
+local function e(e,n)l(e,n or 5)end
+local function e(n,e)l(n,e or 2)end
+local function n(n,e)l(n,type(e)=='number'and e or 1)end
+local e=n
+local function o(t,e,n)e=e or'<var>'r={}l(t,n or 5)local n=table.concat(r,'\n')r=nil
+return e..' = '..n..'\n'end
+return o
+end)package.preload['src.app.Game.mSKGame.logsys.log']=(function(...)if(not string.split)then
+_import('..cc_ext.functions')end
+local p=import('.vdump')local o={}local function l(e)if type(e)=="string"then
+e='"'..e..'"'end
+return tostring(e)end
+local function s(s,f,a)local t={}if type(a)~="number"then a=3 end
+local c={}local e={}local n=string.split(debug.traceback("",2),"\n")t[#t+1]=("dump from: "..string.trim(n[3]))local function d(o,n,t,u,i)n=n or"<var>"local r=""if type(i)=="number"then
+r=string.rep(" ",i-string.len(l(n)))end
+if type(o)~="table"then
+e[#e+1]=string.format("%s%s%s = %s",t,l(n),r,l(o))elseif c[tostring(o)]then
+e[#e+1]=string.format("%s%s%s = *REF*",t,l(n),r)else
+c[tostring(o)]=true
+if u>a then
+e[#e+1]=string.format("%s%s = *MAX NESTING*",t,l(n))else
+e[#e+1]=string.format("%s%s = {",t,l(n))local i=t.."    "local n={}local a=0
+local r={}for e,t in pairs(o)do
+n[#n+1]=e
+local n=l(e)local n=string.len(n)if n>a then a=n end
+r[e]=t
+end
+table.sort(n,function(e,n)if type(e)=="number"and type(n)=="number"then
+return e<n
+else
+return tostring(e)<tostring(n)end
+end)for t,n in ipairs(n)do
+d(r[n],n,i,u+1,a)end
+e[#e+1]=string.format("%s}",t)end
+end
+end
+d(s,f,"",1)for n,e in ipairs(e)do
+t[#t+1]=(e)end
+t[#t+1]='\n'local e=table.concat(t,'\n')return e
+end
+local n=cc and cc.FileUtils:getInstance():getGameWritablePath()or''local t=string.gsub(tostring(os.date()),'[/: ]','_')..'_'..tostring(os.time())..'_log.log'local e=n..'logs/'..t
+local l=n..'logs_impo/'..t
+if(not _MOBILE)then
+os.execute('cd qyhz && mkdir logs')os.execute('cd qyhz && mkdir logs_impo')else
+e=n..'logs_'..t
+l=n..'logs_impo_'..t
+end
+local n=io.open(e,'w')n:close()n=nil
+print(l)n=io.open(l,'w')n:close()n=nil
+local n=import('.serial')local t
+t=function(e,t,o)return n.tostring(e)..'='..n.tostring(t)..'\n'end
+local function a(e,n,t)local e=io.open(e,t)e:write(n)e:close()end
+o.dumptofile=function(r,i,t,n)if(_MOBILE)then
+print(i..'=')dump(r)end
+assert(type(t)=='boolean'or t==nil,'')n=n or 5
+local n=s(r,i,n)if(debug.getinfo(2))then
+n='>>>['..tostring(os.time())..'] currentline : '..tostring(debug.getinfo(2).currentline or'')..' in '..tostring(debug.getinfo(2).source or'')..'\n'..n
+end
+a(e,n,'a+')if(t)then
+a(l,n,'a+')end
+end
+o.dumpvtofile=function(t,l,n,a)n=n or 5
+local n=p(t,l,n)local e=io.open(e,'a+')e:write('>>> currentline : '..debug.getinfo(2).currentline..' in '..tostring(debug.getinfo(2).source)..'\n')e:write(n)e:close()end
+o.dumptstmp=function()local n=tostring(os.date())..'_'..tostring(os.time())n='time: '..n..'\n'local e=io.open(e,'a+')e:write(n)e:close()end
+if(_MOBILE)then
+o.dumptofile=function()end
+o.dumpvtofile=function()end
+o.dumptstmp=function()end
+end
+return o
+end)package.preload['src.app.Game.mSKGame.GS.WellCacheMG']=(function(...)local e={}do
+e._stuffcache=nil
+e._stuffinuse=nil
+e.max_well=1
+e.onadd=function(n)end
+e.ondel=function(n)end
+e.onget=function(n)return n
+end
+e.onnew=function(n,n)end
+e.onrecycle=function(n)end
+e.addStuffCache=function(t,n)for n,e in ipairs(n)do
+t.onadd(e)end
+return table.merge(t._stuffcache,n)end
+e.addStuff=function(n,t,o)n.onrecycle(t)if(n._stuffinuse[t])then
+n:markUnuse(t,o)end
+if(n:predictStuffCacheOverFlow(o,t))then
+return n.ondel(t)else
+n.onadd(t)return n:addToStuffCache(o,t)end
+end
+e.getStuff=function(t,l,o)local n=t:getATestStuffCache(o)if not n then
+n=t.onnew(l,o)t:addStuff(n,o)end
+n=n and t.onget(n)t:giveStuffCache(o)t:markInuse(n,o)return n
+end
+e.markInuse=function(n,t,o)n._stuffinuse[t]=o
+end
+e.markUnuse=function(n,t,o)return table.removeItem(n._stuffinuse,t)end
+e.getWell=function(n,t)if(not n._stuffcache[t])then
+n._stuffcache[t]={}end
+return n._stuffcache[t]end
+e.predictStuffCacheOverFlow=function(t,n,o)local n=t:getWell(n)if(table.count(n)<=t.max_well or n[o])then
+return false
+else
+return true
+end
+end
+e.addToStuffCache=function(o,n,t)local n=o:getWell(n)gonb(table.count(n)<=o.max_well or n[t],'cache well overflow !!!')if(not n[t])then
+n[t]=true
+else
+return
+end
+end
+e.getATestStuffCache=function(n,t)local n=n:getWell(t)return(next(n))end
+e.giveStuffCache=function(t,n)local t=t:getWell(n)local n=(next(t))if(n)then
+t[n]=nil
+end
+return n
+end
+e.stuffCacheNotEmpty=function(t,n)return#(t:getWell(n))>0
+end
+e.removeStuffCache=function(n,t)while(n:stuffCacheNotEmpty(t))do
+local e=n:giveStuffCache(t)n.ondel(e)end
+end
+e.recycleStuffForce=function(n,o,t)return n:addStuff(o,t)end
+e.recycleAllStuffForce=function(n)for e,t in pairs(n._stuffinuse)do
+n:recycleStuffForce(e,t)end
+end
+e.clearAllStuffCaches=function(n)for e,t in pairs(n._stuffcache)do
+n:removeStuffCache(e)end
+end
+e.setWellDepth=function(n,t)n.max_well=t or n.max_well
+end
+e.exec=function(n,e)for t,n in ipairs(n._stuffcache)do
+e(n,i)end
+for t,n in ipairs(n._stuffinuse)do
+e(n,i)end
+end
+end
+local n
+n=function()local n={_stuffcache={},_stuffinuse={}}setmetatable(n,{__index=e})return n
+end
+return n
+end)package.preload['src.app.Game.mSKGame.cc_ext.Cocos2d']=(function(...)cc=cc or{}function cc.clampf(t,n,e)local o=0
+if n>e then
+o=n
+n=e
+e=o
+end
+if t<n then
+return n
+elseif t<e then
+return t
+else
+return e
+end
+end
+function cc.p(e,n)if nil==n then
+return{x=e.x,y=e.y}else
+return{x=e,y=n}end
+end
+function cc.pAdd(e,n)return{x=e.x+n.x,y=e.y+n.y}end
+function cc.pSub(e,n)return{x=e.x-n.x,y=e.y-n.y}end
+function cc.pMul(e,n)return{x=e.x*n,y=e.y*n}end
+function cc.pMidpoint(n,e)return{x=(n.x+e.x)/2,y=(n.y+e.y)/2}end
+function cc.pForAngle(e)return{x=math.cos(e),y=math.sin(e)}end
+function cc.pGetLength(e)return math.sqrt(e.x*e.x+e.y*e.y)end
+function cc.pNormalize(n)local e=cc.pGetLength(n)if 0==e then
+return{x=1,y=0}end
+return{x=n.x/e,y=n.y/e}end
+function cc.pCross(e,n)return e.x*n.y-e.y*n.x
+end
+function cc.pDot(e,n)return e.x*n.x+e.y*n.y
+end
+function cc.pToAngleSelf(e)return math.atan2(e.y,e.x)end
+function cc.pGetAngle(n,e)local n=cc.pNormalize(n)local e=cc.pNormalize(e)local e=math.atan2(cc.pCross(n,e),cc.pDot(n,e))if math.abs(e)<1192092896e-16 then
+return 0
+end
+return e
+end
+function cc.pGetDistance(e,n)return cc.pGetLength(cc.pSub(e,n))end
+function cc.pIsLineIntersect(o,l,t,a,n,e)if((o.x==l.x)and(o.y==l.y))or((t.x==a.x)and(t.y==a.y))then
+return false,n,e
+end
+local r=l.x-o.x
+local i=l.y-o.y
+local c=a.x-t.x
+local a=a.y-t.y
+local l=o.x-t.x
+local o=o.y-t.y
+local t=a*r-c*i
+n=c*o-a*l
+e=r*o-i*l
+if(t==0)then
+if(n==0 or e==0)then
+return true,n,e
+end
+return false,n,e
+end
+n=n/t
+e=e/t
+return true,n,e
+end
+function cc.pPerp(e)return{x=-e.y,y=e.x}end
+function cc.RPerp(e)return{x=e.y,y=-e.x}end
+function cc.pProject(n,e)return{x=e.x*(cc.pDot(n,e)/cc.pDot(e,e)),y=e.y*(cc.pDot(n,e)/cc.pDot(e,e))}end
+function cc.pRotate(e,n)return{x=e.x*n.x-e.y*n.y,y=e.x*n.y+e.y*n.x}end
+function cc.pUnrotate(n,e)return{x=n.x*e.x+n.y*e.y,n.y*e.x-n.x*e.y}end
+function cc.pLengthSQ(e)return cc.pDot(e,e)end
+function cc.pDistanceSQ(e,n)return cc.pLengthSQ(cc.pSub(e,n))end
+function cc.pGetClampPoint(e,n,t)return{x=cc.clampf(e.x,n.x,t.x),y=cc.clampf(e.y,n.y,t.y)}end
+function cc.pFromSize(e)return{x=e.width,y=e.height}end
+function cc.pLerp(t,n,e)return cc.pAdd(cc.pMul(t,1-e),cc.pMul(n,e))end
+function cc.pFuzzyEqual(n,t,e)if(n.x-e<=t.x)and(t.x<=n.x+e)and(n.y-e<=t.y)and(t.y<=n.y+e)then
+return true
+else
+return false
+end
+end
+function cc.pRotateByAngle(n,e,t)return cc.pAdd(e,cc.pRotate(cc.pSub(n,e),cc.pForAngle(t)))end
+function cc.pIsSegmentIntersect(o,l,a,r)local e,n,t=0,0,false
+t,e,n=cc.pIsLineIntersect(o,l,a,r,e,n)if t and e>=0 and e<=1 and n>=0 and n<=1 then
+return true
+end
+return false
+end
+function cc.pGetIntersectPoint(e,t,a,r)local n,o,l=0,0,false
+l,n,o=cc.pIsLineIntersect(e,t,a,r,n,o)if l then
+return cc.p(e.x+n*(t.x-e.x),e.y+n*(t.y-e.y))else
+return cc.p(0,0)end
+end
+function cc.size(n,e)return{width=n,height=e}end
+function cc.rect(t,n,e,o)return{x=t,y=n,width=e,height=o}end
+function cc.rectEqualToRect(e,n)if((e.x>=n.x)or(e.y>=n.y)or(e.x+e.width<=n.x+n.width)or(e.y+e.height<=n.y+n.height))then
+return false
+end
+return true
+end
+function cc.rectGetMaxX(e)return e.x+e.width
+end
+function cc.rectGetMidX(e)return e.x+e.width/2
+end
+function cc.rectGetMinX(e)return e.x
+end
+function cc.rectGetMaxY(e)return e.y+e.height
+end
+function cc.rectGetMidY(e)return e.y+e.height/2
+end
+function cc.rectGetMinY(e)return e.y
+end
+function cc.rectContainsPoint(e,n)local t=false
+if(n.x>=e.x)and(n.x<=e.x+e.width)and(n.y>=e.y)and(n.y<=e.y+e.height)then
+t=true
+end
+return t
+end
+function cc.rectIntersectsRect(e,n)local e=not(e.x>n.x+n.width or
+e.x+e.width<n.x or
+e.y>n.y+n.height or
+e.y+e.height<n.y)return e
+end
+function cc.rectUnion(t,n)local e=cc.rect(0,0,0,0)e.x=math.min(t.x,n.x)e.y=math.min(t.y,n.y)e.width=math.max(t.x+t.width,n.x+n.width)-e.x
+e.height=math.max(t.y+t.height,n.y+n.height)-e.y
+return e
+end
+function cc.rectIntersection(n,e)local t=cc.rect(math.max(n.x,e.x),math.max(n.y,e.y),0,0)t.width=math.min(n.x+n.width,e.x+e.width)-t.x
+t.height=math.min(n.y+n.height,e.y+e.height)-t.y
+return t
+end
+function cc.c3b(e,n,t)return{r=e,g=n,b=t}end
+function cc.c4b(t,n,o,e)return{r=t,g=n,b=o,a=e}end
+function cc.c4f(e,n,t,o)return{r=e,g=n,b=t,a=o}end
+local function o(e)return(e.r<=1 and e.g<=1 and e.b<=1)and(math.ceil(e.r)~=e.r or math.ceil(e.g)~=e.g or math.ceil(e.b)~=e.b)end
+function cc.convertColor(e,t)assert(type(e)=="table"and e.r and e.g and e.b,"cc.convertColor() - invalid input color")local n
+if t=="3b"then
+if o(e)then
+n={r=math.ceil(e.r*255),g=math.ceil(e.g*255),b=math.ceil(e.b*255)}else
+n={r=e.r,g=e.g,b=e.b}end
+elseif t=="4b"then
+if o(e)then
+n={r=math.ceil(e.r*255),g=math.ceil(e.g*255),b=math.ceil(e.b*255)}else
+n={r=e.r,g=e.g,b=e.b}end
+if e.a then
+if math.ceil(e.a)~=e.a or e.a>=1 then
+n.a=e.a*255
+else
+n.a=e.a
+end
+else
+n.a=255
+end
+elseif t=="4f"then
+if o(e)then
+n={r=e.r,g=e.g,b=e.b}else
+n={r=e.r/255,g=e.g/255,b=e.b/255}end
+if e.a then
+if math.ceil(e.a)~=e.a or e.a>=1 then
+n.a=e.a
+else
+n.a=e.a/255
+end
+else
+n.a=255
+end
+else
+error(string.format("cc.convertColor() - invalid type %s",t),0)end
+return n
+end
+function cc.vertex2F(n,e)return{x=n,y=e}end
+function cc.Vertex3F(e,t,n)return{x=e,y=t,z=n}end
+function cc.tex2F(e,n)return{u=e,v=n}end
+function cc.PointSprite(t,n,e)return{pos=t,color=n,size=e}end
+function cc.Quad2(t,o,n,e)return{tl=t,tr=o,bl=n,br=e}end
+function cc.Quad3(e,t,o,n)return{tl=e,tr=t,bl=o,br=n}end
+function cc.V2F_C4B_T2F(e,n,t)return{vertices=e,colors=n,texCoords=t}end
+function cc.V2F_C4F_T2F(e,t,n)return{vertices=e,colors=t,texCoords=n}end
+function cc.V3F_C4B_T2F(t,e,n)return{vertices=t,colors=e,texCoords=n}end
+function cc.V2F_C4B_T2F_Quad(e,o,t,n)return{bl=e,br=o,tl=t,tr=n}end
+function cc.V3F_C4B_T2F_Quad(t,o,n,e)return{tl=t,bl=o,tr=n,br=e}end
+function cc.V2F_C4F_T2F_Quad(t,e,n,o)return{bl=t,br=e,tl=n,tr=o}end
+function cc.T2F_Quad(o,t,e,n)return{bl=o,br=t,tl=e,tr=n}end
+function cc.AnimationFrameData(e,n,t)return{texCoords=e,delay=n,size=t}end
+function cc.PhysicsMaterial(t,n,e)return{density=t,restitution=n,friction=e}end
+function cc.vec3(n,e,t)return{x=n,y=e,z=t}end
+function cc.vec4(e,n,o,t)return{x=e,y=n,z=o,w=t}end
+function cc.vec3normalize(e)local n=e.x*e.x+e.y*e.y+e.z*e.z
+if n==1 then
+return e
+end
+n=math.sqrt(n)if n<2e-37 then
+return e
+end
+n=1/n
+return{x=e.x*n,y=e.y*n,z=e.z*n}end
+function cc.quaternion(t,e,o,n)return{x=t,y=e,z=o,w=n}end
+function cc.quaternion_createFromAxisAngle(e,n)local o=n*.5
+local t=math.sin(o)local e=cc.vec3(e.x,e.y,e.z)e=cc.vec3normalize(e)local n=cc.vec3(0,0,0)n.x=e.x*t
+n.y=e.y*t
+n.z=e.z*t
+n.w=math.cos(o)return n
+end
+function cc.blendFunc(e,n)return{src=e,dst=n}end
+cc.mat4=cc.mat4 or{}function cc.mat4.new(...)local e={...}local o=#e
+local n={}if 1==o then
+assert(type(e[1])=="table","type of input params are wrong to new a mat4 when num of params is 1")for t=1,16 do
+if e[1][t]~=nil then
+n[t]=e[1][t]else
+n[t]=0
+end
+end
+elseif 16==o then
+for t=1,16 do
+n[t]=e[t]end
+end
+setmetatable(n,{__index=cc.mat4})return n
+end
+function cc.mat4.getInversed(e)return mat4_getInversed(e)end
+function cc.mat4.transformVector(t,n,e)return mat4_transformVector(t,n,e)end
+function cc.mat4.multiply(n,e)return mat4_multiply(n,e)end
+function cc.mat4.decompose(e,t,n,o)return mat4_decompose(e,t,n,o)end
+function cc.mat4.createIdentity()return cc.mat4.new(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)end
+function cc.mat4.createTranslation(n,e)assert(type(n)=="table"and type(e)=="table","The type of input parameters should be table")e=cc.mat4.createIdentity()e[13]=n.x
+e[14]=n.y
+e[15]=n.z
+return e
+end
+function cc.mat4.createRotation(n,e)assert(type(n)=="table"and type(e)=="table","The type of input parameters should be table")local l=n.x+n.x
+local o=n.y+n.y
+local t=n.z+n.z
+local r=n.x*l
+local c=n.y*o
+local u=n.z*t
+local d=n.x*o
+local i=n.x*t
+local a=n.y*t
+local l=n.w*l
+local o=n.w*o
+local n=n.w*t
+e[1]=1-c-u
+e[2]=d+n
+e[3]=i-o
+e[4]=0
+e[5]=d-n
+e[6]=1-r-u
+e[7]=a+l
+e[8]=0
+e[9]=i+o
+e[10]=a-l
+e[11]=1-r-c
+e[12]=0
+e[13]=0
+e[14]=0
+e[15]=0
+e[16]=1
+return e
+end
+function cc.mat4.translate(n,e)return mat4_translate(n,e)end
+function cc.mat4.createRotationZ(n,e)return mat4_createRotationZ(n,e)end
+function cc.mat4.setIdentity(e)return mat4_setIdentity(e)end
+function cc.mat4.createTranslation(...)return mat4_createTranslation(...)end
+function cc.mat4.createRotation(...)return mat4_createRotation(...)end end)package.preload['src.app.Game.mSKGame.GS.Selector']=(function(...)local function a(l)local e={}local o=l or{}function e._B(e)local n=table.expand(o,'_B')return function(t)assert(type(t)=='table','')local e=string.split(e,',')for o,e in ipairs(e)do
+if(n[e]==nil)then n[e]={}end
+table.merge(n[e],t)end
+end
+end
+function e._I(n)local e=table.expand(o,'_I')return function(t)assert(type(t)=='table','')local n=string.split(n,',')for o,n in ipairs(n)do
+if(e[n]==nil)then e[n]={}end
+table.merge(e[n],t)end
+end
+end
+return e,l
+end
+local t={}local function l(o,n,e)if(t[n])then
+return t[n]end
+local o=table.backableForceMerge(_G,e)local e=require(n)if(type(e)=='boolean'and e==true)then
+e={}end
+o()t[n]=e
+return e
+end
+local e={loadWithSelector=l,createSelector=a,}return e
+end)package.preload['src.app.Game.mSKGame.GS.LLM']=(function(...)local t=import('.Matrix2')local function i(o,n,i,a)if(not o.cardsLayoutReflactMap)then return{}end
+assert(o.cardsLayoutReflactMap,'')local function l(n)for t,e in ipairs(n)do
+if(type(e)=='table')then
+l(e)else
+n[t]=tostring(e)end
+end
+end
+l(n)local l={}local function r(n,l,e)for e,t in ipairs(e)do
+if(type(t)=='table')then
+r(n,l,t)else
+local e=n.cardsLayoutReflactMap[t]if(e~=nil)then
+local a=e[1]local o
+local o=n.allCardsLayoutList
+for n=1,#e-1 do
+o=o[e[n]]end
+o[e[#e]]=false
+table.removeItem(e,t)l[a]=n.allCardsLayoutList[a]end
+end
+end
+end
+r(o,l,n)for n,e in pairs(l)do
+t.strip(e,{false,{}})end
+local e
+local r=i[1]e=o.allCardsLayoutList[r]if(a=='appendItem')then
+t.appendItem(e,n[1])assert(#e==1 and#e[1]==1 and#n==1,'')elseif(a=='addItem')then
+assert(#n==1,'')if(not t.containedElement(e,n[1]))then
+t.addItem(e,n[1])end
+elseif(a=='appendRaws')then
+t.appendRaws(e,n)else
+assert(false,'')end
+t.check(e)local function a(o,n,e)for l,e in ipairs(e)do
+if(type(e)=='table')then
+a(o,n,e)else
+local n=t.getIndex(n,e)if(n==nil)then
+assert(false,'')end
+o.cardsLayoutReflactMap[e]={r,n[1],n[2],}end
+end
+end
+a(o,e,n)l[r]=e
+return l
+end
+local function t(n,e)n.allCardsLayoutList=e
+n.cardsLayoutReflactMap=makeReflactMap(e)end
+local function e(e)return indexByPath(self.allCardsLayoutList,e)end
+local e={reset=t,moveNodes=i,}return function(n)local e=table.extend({},e)if(n)then
+e:reset(n)end
+return e
+end
+end)package.preload['src.app.Game.mSKGame.GS.AnimVM']=(function(...)local e
+e=function(...)local e,n=parseParam(...)local e=LazyFunc(e,n)end
+end)package.preload['src.app.Game.mSKGame.GS.ScopeTask']=(function(...)local e=_import('.IDMetaManager')local p=_import('.EN')local o=_import('.Matrix2')local a
+a=function()local e=e.getMeta('_common','scopetask')assert(type(e)=='table','')assert(e.open==true,'')local n=e.curTask
+assert(#n.rmNodes==0 and#n.rmNodes==0 and#n.addNodes==0,'')e.readyId=e.curTaskId
+e._timestmp=n._timestmp
+e.curTask=nil
+e.curTaskId=nil
+e.open=false
+end
+local u
+u=function()local n=e.getMeta('_common','scopetask')if(not n)then
+n={open=false,tasklist={}}return e.setMeta('_common','scopetask',n)end
+end
+local t
+t=function()local e=e.getMeta('_common','scopetask')gonv(e)local n={taskid={},rmNodes={},mvNodes={},addNodes={},newmatrixs={},_timestmp=os.time()}table.append(e.tasklist,n)e.open=true
+e.readyId=nil
+e.curTaskId=n.taskid
+e.curTask=n
+e.gettimes=nil
+end
+local r
+r=function()local e=e.getMeta('_common','scopetask')if(e.open==true)then
+a()assert(false,'task opened')end
+t()e.open=true
+end
+local i
+i=function()local e=e.getMeta('_common','scopetask')return e.open
+end
+local c
+c=function(n,t)local e=e.getMeta(n,'scope')return e.checkChildren(n,o.mergeToTable(t))end
+local l
+l=function(e)if(not e.runningTask)then
+e.runningTask=1
+end
+local e=e.tasklist[e.runningTask]return e
+end
+local d
+d=function(e)if(not e.postedTaskList)then
+e.postedTaskList={}end
+return e.postedTaskList
+end
+local f
+f=function(e)local n=l(e)gonv(e.postedTaskList[n.taskid])e.postedTaskList[n.taskid]=nil
+gonv(e.runningTask)e.runningTask=e.runningTask+1
+if(e.runningTask>#e.tasklist)then
+e.runningTask=nil
+e.tasklist={}gonb(next(e.postedTaskList)==nil)e.postedTaskList={}end
+end
+local s
+s=function(o,n)gonv(o)local n=e.getMeta('_common','stuffs')if(not n)then
+dumptofile(e._ConfigBuffer,'_ConfigBuffer')end
+local t=e.getMeta('_common','scopetask')local n=l(t)gonv(n)gonb(n.taskid==o)local a=t.open
+t.open=false
+local o={}for t,l in pairs(n.rmNodes)do
+local e=e.getMeta(t,'scope')e.removeNodes(t,l)table.removeItem(n.rmNodes,t)o[t]={}end
+for t,l in pairs(n.mvNodes)do
+local e=e.getMeta(t,'scope')e.updateNodesPos(t,l)table.removeItem(n.mvNodes,t)o[t]={}end
+for t,l in pairs(n.addNodes)do
+local e=e.getMeta(t,'scope')e.addNodes(t,l)table.removeItem(n.addNodes,t)o[t]={}end
+for t,o in pairs(o)do
+local o=e.getMeta(t,'layout')local e=n.newmatrixs[t]o.updateScopeLayout(t,e)n.newmatrixs[t]=nil
+c(t,e)end
+if(next(n.newmatrixs)~=nil)then
+print('>>> newmatrixs is not empty !!!')end
+t.open=a
+f(t)p:publish({'ScopeTaskDidit'},{From='ScopeTask:applyTask',IDs=o})local e=n._donecallback
+if(e)then
+return e()end
+end
+local o=0
+local f
+f=function(t)o=o+1
+local n,d,c,i,o,l
+n,d,c,i,o,l=t[1],t[2].diffIDs,t[2].rmIDs,t[2].newIDs,t[3],t[4]local o=e.getMeta('_common','scopetask')local t=o.open
+if(not t)then
+r()end
+if(true)then
+local e=o.curTask
+e.newmatrixs[n]=l
+if(e.rmNodes[n]==nil)then
+e.rmNodes[n]={}end
+table.merge(e.rmNodes[n],c)if(e.addNodes[n]==nil)then
+e.addNodes[n]={}end
+table.merge(e.addNodes[n],i)if(e.mvNodes[n]==nil)then
+e.mvNodes[n]={}end
+table.merge(e.mvNodes[n],d)end
+if(not t)then
+a()end
+o.open=t
+end
+local c
+c=function(o,l)local t=e.getMeta('_common','scopetask')local n=false
+local e=t.tasklist
+for t=1,#e do
+local e=e[t]if(e.taskid==o)then
+n=true
+break
+end
+end
+local e=true
+local t=t.tasklist
+for n=1,#t do
+local n=t[n]if(n._timestmp==l)then
+e=false
+break
+end
+end
+if(e)then
+gonb(false,'taskoutofdate')end
+if(not n)then
+return gonb(false,e)end
+end
+local p
+p=function(t,i,r,a)local n=e.getMeta('_common','scopetask')local e=l(n)if(not e)then
+dumptofile(n,'task')dumpvtofile(n,'task')end
+gonv(e)local o=d(n)o[t]=true
+c(t,r)while(o[e.taskid])do
+if(e.taskid==t)then
+e._donecallback=a
+end
+s(e.taskid,i)e=l(n)if(not e)then
+gonb(not next(n.tasklist))break
+end
+end
+end
+local l
+l=function()local e=e.getMeta('_common','scopetask')gonb(not e.open)local n=e.readyId
+print(n,'get taskid')local t=tostring(os.time())local a=e._timestmp
+gonb(not e.gettimes)e.gettimes=1
+local e=0
+return function(l)gonb(e==0)e=e+1
+print(n,'post taskid')o=o-1
+return p(n,t,a,l)end
+end
+u()local t
+t=function(n)local t=e.getMeta('_common','scopetask')gonb(not t.open)local e=e.getMeta(n,'layout')e.stopDeriTask(n)for t,e in ipairs(t.tasklist)do
+e.rmNodes[n]=nil
+e.addNodes[n]=nil
+e.mvNodes[n]=nil
+end
+end
+local n
+n=function()local n={open=false,tasklist={}}return e.setMeta('_common','scopetask',n)end
+return{applyLayout=f,openTask=r,closeTask=a,taskOpened=i,getTask=l,stopTask=t,clearTasksForce=n}end)package.preload['src.app.Game.mSKGame.GS.TagSys']=(function(...)local n=_import('..ext.rmap')local t
+t=function(e)end
+local o
+o=function(e)return tag_space[e]end
+local e
+e=function(e)local e=t(e)local e=n.foldl(n.cb,{},e)return e
+end
+local t
+t=function(t,e)return n.keys(e(t))end
+local n
+n=function(n)return t(n,e)end
+local l
+l=function()end
+return{sel=o,cb=e,selv=t,selvcb=n,create_sys=l}end)package.preload['src.app.Game.mSKGame.GS.Matrix2']=(function(...)local function t(e,n)assert(type(e)=='number'and type(n)=='number','')return e>n and e or n
+end
+my=my or{}my.max=my.max or t
+local function m(e,n)if(type(e)=='table')then
+n=e.height
+e=e.width
+end
+assert(e~=nil,'')return{width=e,height=n}end
+local function c(e,t)for n,e in ipairs(e)do
+for o,l in ipairs(e)do
+t(n,o,l,e)end
+end
+end
+local function b(e,o)c(e,function(t,n,l,e)e[n]=o(l,n,e,t)end)end
+local function _(t,n,a,e,r,i)for o,l in pairs(a)do
+assert((t[o]or n[o]or e[o])==nil,'')end
+for t,o in pairs(t)do
+assert(n[t]==nil and e[t]==nil,'')end
+for n,o in pairs(n)do
+assert(t[n]==nil and e[n]==nil,'')end
+for e,o in pairs(e)do
+assert(n[e]==nil and t[e]==nil,'')end
+local o={}local l={}for n,e in ipairs({t,n,a,e})do
+table.merge(l,e)end
+local n=0
+for e,e in pairs(l)do
+n=n+1
+end
+local e=0
+for t,n in ipairs(r)do
+for t,n in ipairs(n)do
+o[n]=true
+e=e+1
+end
+end
+for t,n in ipairs(i)do
+for t,n in ipairs(n)do
+if(o[n]==nil)then
+o[n]=true
+e=e+1
+end
+end
+end
+if(n~=e)then
+print(n)end
+assert(n==e,'')for e,n in pairs(o)do
+assert(l[e]~=nil,'')end
+end
+local function g(o,c)assert(o.width and o.height,'')assert(c.width and c.height,'')local a={}local i={}local r={}local d={}local h=my.max(#o,#c)local l=my.max(o.width,c.width)local s,f,u,e,n,p,t
+s=my.max(o.height,c.height)for l=1,l do
+f=o[l]or{}u=c[l]or{}p=my.max(#f,#u)for o=1,s do
+n=f[o]e=u[o]if(e==n)then
+if(e==nil)then
+assert(l>h or o>p,'')end
+if(e~=nil)then
+d[e]=checktable(d[e])table.insert(d[e],1,{l,o})end
+elseif(e~=n)then
+if(n==nil)then
+elseif(r[n])then
+i[n]=checktable(i[n])t=table.pop_back(r[n])table.insert(i[n],1,t)t[3]=l
+t[4]=o
+if(#r[n]==0)then
+table.removeItem(r,n)end
+else
+a[n]=checktable(a[n])table.insert(a[n],1,{l,o})end
+if(e==nil)then
+elseif(a[e])then
+i[e]=checktable(i[e])t=table.pop_back(a[e])table.insert(i[e],1,t)table.insert(t,1,o)table.insert(t,1,l)if(#a[e]==0)then
+table.removeItem(a,e)end
+else
+r[e]=checktable(r[e])table.insert(r[e],1,{l,o})end
+end
+t=nil
+end
+end
+return i,a,r,d
+end
+local function h(a,i)assert(a.width and a.height,'')assert(i.width and i.height,'')local r={}local o={}local c={}local u={}local p=my.max(#a,#i)local l=my.max(a.width,i.width)local t,d,f,e,n,s
+t=my.max(a.height,i.height)for l=1,l do
+d=a[l]or{}f=i[l]or{}s=my.max(#d,#f)for t=1,t do
+n=d[t]e=f[t]if(e==n)then
+if(e==nil)then
+assert(l>p or t>s,'')end
+if(e~=nil)then
+u[e]={l,t}end
+elseif(e~=n)then
+if(n==nil)then
+elseif(c[n])then
+o[n]=c[n]o[n][3]=l
+o[n][4]=t
+if(type(n)=='number')then
+table.remove(c,n)else
+c[n]=nil
+end
+else
+r[n]={l,t}end
+if(e==nil)then
+elseif(r[e])then
+o[e]=r[e]table.insert(o[e],1,t)table.insert(o[e],1,l)if(type(n)=='number')then
+table.remove(r,e)else
+r[e]=nil
+end
+else
+c[e]={l,t}end
+end
+end
+end
+_(r,c,o,u,a,i)return o,r,c,u
+end
+local function a(e,n,t)local t=#e
+for n=t+1,n do
+e[n]={}end
+return e
+end
+local function r(n)local e={}for t,n in ipairs(n)do
+table.iextend(e,n)end
+return e
+end
+local function l(e,n)for t,e in ipairs(e)do
+for o=#e,1,-1 do
+local t=e[o]for l,n in ipairs(n)do
+if(t==n)then
+table.remove(e,o)elseif(type(t)=='table'and type(n)=='table'and#n==#t)then
+table.remove(e,o)end
+end
+end
+end
+for n=#e,1,-1 do
+local t=e[n]if(#t==0)then
+table.remove(e,n)end
+end
+end
+local function i(e,n)return l(e,{n})end
+local function d(n,e,t)gonb(e[1]>0)gonb(e[2]>0)gonb(e[1]<=n.width)gonb(e[2]<=n.height)if(not n[e[1]])then
+n[e[1]]={}end
+if(e[2]==n.height)then
+assert(n[e[1]][n.height]==nil)end
+table.insert(n[e[1]],e[2],t)end
+local function _(e,n)assert(n,'')local t=#e>0 and#e[#e]or 0
+assert(t<=e.height and#e<=e.width,'')for o,t in ipairs(e)do
+if(#t<e.height)then
+t[#t+1]=n
+n=nil
+break
+end
+end
+if(n)then
+if(#e==0)then
+e[1]={n}else
+e[#e+1]={n}end
+end
+assert((#e>0 and#e[#e]or 0)<=e.height and#e<=e.width,'')end
+local function p(e,t)local n=#e>0 and#e[#e]or 0
+assert(n<=e.height and#e<=e.width,'')if(n==e.height)then
+e[#e+1]={t}elseif(#e>0)then
+e[#e][n+1]=t
+elseif(#e==0)then
+e[#e+1]={t}else
+assert(false,'')end
+assert((#e>0 and#e[#e]or 0)<=e.height and#e<=e.width,'')end
+local function o(e,n)assert(#e<e.width,'')assert(#n<=e.height,'')e[#e+1]=n
+end
+local function f(e,n)for t,n in pairs(n)do
+o(e,n)end
+end
+local function s(n,t)local e=false
+c(n,function(o,o,n,o)if(n==t)then e=true end end)return e
+end
+local function y(n)local e=0
+c(n,function()e=e+1 end)return e
+end
+local function S(t,e)local n=true
+c(t,function(t,o,l,a)if(e[t]==nil or e[t][o]~=l)then
+n=false
+end
+end)return n
+end
+local function k(n)local e=0
+c(n,function()e=e+1
+end)return e
+end
+local function x(t,n,e,l,o)local e={}for t,n in pairs(n)do
+if(e[n[1]]==nil)then
+e[n[1]]={}end
+e[n[1]][n[2]]=t.nodeid
+end
+for t,n in pairs(l)do
+if(e[n[1]]==nil)then
+e[n[1]]={}end
+e[n[1]][n[2]]=t.nodeid
+end
+for t,n in pairs(o)do
+if(e[n[1]]==nil)then
+e[n[1]]={}end
+e[n[1]][n[2]]=t.nodeid
+end
+e.width=t.width
+e.height=t.height
+return e
+end
+local function e(t,n,e,l,o)local e={}for t,n in pairs(n)do
+if(e[n[1]]==nil)then
+e[n[1]]={}end
+e[n[1]][n[2]]=t
+end
+for t,n in pairs(l)do
+if(e[n[1]]==nil)then
+e[n[1]]={}end
+e[n[1]][n[2]]=t
+end
+for t,n in pairs(o)do
+if(e[n[1]]==nil)then
+e[n[1]]={}end
+e[n[1]][n[2]]=t
+end
+e.width=t.width
+e.height=t.height
+return e
+end
+local function u(e)local n=0
+for t=1,#e do
+n=n<#e[t]and#e[t]or n
+end
+assert(n<=e.height and#e<=e.width,'')end
+local function n(n)local e={}table.merge(e,n)e.width=nil
+e.height=nil
+for n,e in pairs(e)do
+local e=next(e)assert(e==1,'')end
+end
+local function t(n,t)local e
+c(n,function(o,n,l,a)if(t==l)then
+e={o,n}end
+end)return e
+end
+local e={foreach=c,map=b,stripValue=i,diff=g,diffUnique=h,fullfillWidth=a,mergeToTable=r,strip=l,insertItem=d,appendItem=p,addItem=_,appendRaw=o,appendRaws=f,check=u,check_bottom=n,countElements=y,containedElement=s,containSame=S,applyChanges=x,getIndex=t,count=k,createEmpty=m,}return e
+end)package.preload['src.app.Game.mSKGame.cc_ext.bitExtend']=(function(...)bit=bit or{}bit.data32={}for e=1,32 do
+bit.data32[e]=2^(32-e)end
+function bit._b2d(t)local e=0
+for n=1,32 do
+if t[n]==1 then
+e=e+bit.data32[n]end
+end
+return e
+end
+function bit._d2b(e)e=e>=0 and e or(4294967295+e+1)local t={}for n=1,32 do
+if e>=bit.data32[n]then
+t[n]=1
+e=e-bit.data32[n]else
+t[n]=0
+end
+end
+return t
+end
+function bit._and(n,e)local o=bit._d2b(n)local t=bit._d2b(e)local n={}for e=1,32 do
+if o[e]==1 and t[e]==1 then
+n[e]=1
+else
+n[e]=0
+end
+end
+return bit._b2d(n)end
+function bit._rshift(n,e)local n=bit._d2b(n)e=e<=32 and e or 32
+e=e>=0 and e or 0
+for t=32,e+1,-1 do
+n[t]=n[t-e]end
+for e=1,e do
+n[e]=0
+end
+return bit._b2d(n)end
+function bit._not(e)local t=bit._d2b(e)local e={}for n=1,32 do
+if t[n]==1 then
+e[n]=0
+else
+e[n]=1
+end
+end
+return bit._b2d(e)end
+function bit._or(n,e)local o=bit._d2b(n)local t=bit._d2b(e)local n={}for e=1,32 do
+if o[e]==1 or t[e]==1 then
+n[e]=1
+else
+n[e]=0
+end
+end
+return bit._b2d(n)end
+bit.band=bit.band or bit._and
+bit.rshift=bit.rshift or bit._rshift
+bit.bnot=bit.bnot or bit._not
+end)package.preload['src.app.Game.mSKGame.cc_ext.UIHelper']=(function(...)local function n(e,t)if(e==nil)then
+return nil
+end
+if(e.getName and e:getName()==t)then
+return e
+end
+local e=e:getChildren()local o=#e
+for o=1,o do
+local e=e[o]local e=n(e,t)if(e~=nil)then
+return e;end
+end
+return nil
+end
+return{seekNodeByName=n}end)package.preload['src.app.Game.mSKGame.logsys.serial']=(function(...)local t={}local h=...or'test'local e={}setmetatable(e,{__index=_G})setfenv(1,e)t.groupsize=1e4
+local d
+local function u(a,o,l)local e=getmetatable(a)local n=e and e.__dump_prefix
+local e=e and e.__dump_suffix
+if type(n)=='function'then
+n=n(a)end
+n=n or""if type(e)=='function'then
+e=e(a)end
+e=e or""local c=0
+for e in pairs(a)do
+c=c+1
+end
+if c>t.groupsize then
+local r,i
+r,i=o(((n..[[
+(function()
+	local t = { function() return {
+]]):gsub("\n","\n"..("\t"):rep(l))))if not r then return nil,i end
+r,i=d(a,o,l+2,t.groupsize,("\t"):rep(l+1)..'} end, function() return {\n')if not r then return nil,i end
+r,i=o((([[
+	} end }
+	local result = {}
+	for _,f in ipairs(t) do
+		for k,v in pairs(f()) do
+			result[k] = v
+		end
+	end
+	return result
+end)()]]..e):gsub("\n","\n"..("\t"):rep(l))))if not r then return nil,i end
+return true
+elseif c==0 then
+local n,e=o(n.."{ }"..e)if not n then return nil,e end
+return true
+else
+local r,t
+r,t=o(n.."{\n")if not r then return nil,t end
+r,t=d(a,o,l+1)if not r then return nil,t end
+r,t=o(("\t"):rep(l).."}"..e)if not r then return nil,t end
+return true
+end
+end
+local function i(e,t,o)local n=type(e)if n=='string'then
+return t((string.format('%q',e):gsub("\t","\\t"):gsub("\\\n","\\n")))elseif n=='number'then
+return t(e)elseif n=='boolean'then
+if e then
+return t('true')else
+return t('false')end
+elseif n=='table'then
+return u(e,t,o)elseif n=='nil'then
+return'nil'elseif n=='userdata'then
+return'userdata: '..tostring(e)elseif n=='function'then
+return'function: '..tostring(e)else
+error("unsupported value type '"..type(e).."'")end
+end
+local r={['and']=true,['break']=true,['do']=true,['else']=true,['elseif']=true,['end']=true,['false']=true,['for']=true,['function']=true,['if']=true,['in']=true,['local']=true,['nil']=true,['not']=true,['or']=true,['repeat']=true,['return']=true,['then']=true,['true']=true,['until']=true,['while']=true,}local function l(t,c,o,a)local n,e
+n,e=o(("\t"):rep(a))if not n then return nil,e end
+local l=" = "if type(t)=='string'then
+if t:match("^[_a-zA-Z][_a-zA-Z0-9]*$")and not r[t]then
+n,e=o(t)if not n then return nil,e end
+else
+n,e=o(string.format('[%q]',t))if not n then return nil,e end
+end
+elseif type(t)=='number'then
+n,e=o('['..t..']')if not n then return nil,e end
+elseif type(t)=='nil'then
+l=""else
+error("unsupported key type '"..type(t).."'")end
+n,e=o(l)if not n then return nil,e end
+n,e=i(c,o,a)if not n then return nil,e end
+n,e=o(",\n")if not n then return nil,e end
+return true
+end
+local function u(e,n)local t,o=type(e),type(n)if t==o then
+return e<n
+else
+return t=='string'end
+end
+local c=table.sort
+local function r(r,t,a,o,e)local n={}for e in pairs(o)do n[#n+1]=e end
+c(n,u)for o,n in pairs(n)do
+local o=r[n]if e then
+e.i=e.i+1
+if e.i%e.size==0 then
+local n,e=t(e.sep)if not n then return nil,e end
+end
+end
+local e,n=l(n,o,t,a)if not e then return nil,n end
+end
+return true
+end
+local function p(n,o,a,e)for i,r in ipairs(n)do
+if e then
+e.i=e.i+1
+if e.i%e.size==0 then
+local n,e=o(e.sep)if not n then return nil,e end
+end
+end
+local t,n
+if e then
+t,n=l(i,r,o,a)else
+t,n=l(nil,r,o,a)end
+if not t then return nil,n end
+end
+return true
+end
+d=function(t,a,l,d,c)local o={}for e,n in ipairs(t)do
+o[e]=true
+end
+local e={}local f={}local u={}local s={}local i={}for e,n in pairs(t)do
+if not o[e]then
+if type(n)=='table'then
+if n[1]==nil then
+u[e]=true
+else
+local t={}for e in ipairs(n)do
+t[e]=true
+end
+local o=false
+for e in pairs(n)do
+if not t[e]then
+o=true
+break
+end
+end
+if o then
+s[e]=true
+else
+i[e]=true
+end
+end
+else
+f[e]=true
+end
+end
+end
+local e,n,o
+if d and c then
+o={i=0,size=d,sep=c,}end
+e,n=r(t,a,l,f,o)if not e then return nil,n end
+e,n=r(t,a,l,u,o)if not e then return nil,n end
+e,n=r(t,a,l,s,o)if not e then return nil,n end
+e,n=r(t,a,l,i,o)if not e then return nil,n end
+e,n=p(t,a,l,o)if not e then return nil,n end
+return true
+end
+function t.tostring(n)local e={}local t,n=i(n,function(n)table.insert(e,n);return true end,0)if not t then return nil,n end
+return table.concat(e)end
+function t.tofile(l,n)local o
+if type(n)=='string'then
+o=n
+n=nil
+end
+local t,e
+if o then
+n,e=io.open(o,'wb')if not n then return nil,e end
+end
+t,e=n:write"return "if not t then return nil,e end
+t,e=i(l,function(...)return n:write(...)end,0)if not t then return nil,e end
+t,e=n:write("\n-- v".."i: ft=lua\n")if not t then return nil,e end
+if o then
+t,e=n:close()if not t then return nil,e end
+end
+return true
+end
+function t.tofile_safe(i,e,o)local r=require'lfs'if o and r.attributes(e,'mode')then
+local t,n=0,o
+while io.open(e..n,"rb")do
+t=t+1
+n=o..t
+end
+assert(os.rename(e,e..n))end
+local l=e..'.new'local n,o,a
+o,n=io.open(l,"wb")if not o then return nil,n end
+a,n=t.tofile(i,o)if not a then
+o:close()os.remove(l)return nil,n
+end
+a,n=o:close()if not a then
+os.remove(l)return nil,n
+end
+if r.attributes(e,'mode')then
+assert(os.remove(e))end
+assert(os.rename(l,e))return true
+end
+if h=='test'then
+local n=[[
+return {
+	Abc = false,
+	FOO = 42,
+	Foo = "42",
+	abc = true,
+	["f O"] = 42,
+	fOO = 42,
+	foo = "42",
+	[-1] = 37,
+	[0] = 37,
+	[42] = 37,
+	Bar = {
+		foo = 142,
+	},
+	bar = {
+		foo = 142,
+	},
+	Baz = {
+		foo = 242,
+		237,
+	},
+	baz = {
+		foo = 242,
+		237,
+	},
+	Baf = {
+		337,
+	},
+	baf = {
+		337,
+	},
+	37,
+}
+-- v]]..[[i: ft=lua
+]]local e
+if _VERSION=="Lua 5.1"then
+e=assert(loadstring(n))()elseif _VERSION=="Lua 5.2"then
+e=assert(load(n))()else
+error("unsupported Lua version")end
+local o=os.tmpname()assert(t.tofile_safe(e,o))local o=assert(io.open(o,"rb"))local l=assert(o:read"*a")assert(o:close())assert(l==n,"tested string and dumped equivalent mismatch")local e=assert(t.tostring(e))assert(l:sub(8,-16)==e,"tested string and dumped equivalent mismatch")print("all tests passed successfully")end
+return t
+end)package.preload['src.app.Game.mSKGame.ext.atest']=(function(...)local e
+e=function(t,n)if(not t)then
+local e=debug.traceback('',3)print(n)dumptofile(n,'tip for error :')print('error form _g_assert: ',e)dumptofile(e,'error from _g_assert')e=e:gsub('\n','')if(_show_assert_anim)then
+_show_assert_anim(e)end
+return assert(t,n)end
+end
+local c
+c=function(n,t)e(n~=nil,t or'value is '..type(n))return n
+end
+local r
+r=function(n,t)e(n,t or'condition is '..type(n))return n
+end
+local i
+i=function(n,t)e(type(n)=='table',t or'table is '..type(n))e(#n>0,'table is empty')return n
+end
+local a
+a=function(n,t)e(n,'unexpected result')return n
+end
+local l
+l=function(t,n,o)if(type(n)=='string')then
+e(type(t)==n,o or'unmatch type '..n)else
+for l,n in pairs(n)do
+if(type(t)==n)then
+e(true,o or'unmatch type '..n)return t
+end
+end
+dump(n,'type list')e(false,o or'unmatch any type in list')end
+return t
+end
+return{gonv=c,gonc=r,gont=i,gonb=a,gontype=l}end)package.preload['src.app.Game.mSKGame.Logic.casegen_ext']=(function(...)local e=_import('.casegen')local e=e.allsetitercomp
+return{allsetitercomp=e}end)package.preload['src.app.Game.mSKGame.ext.functions']=(function(...)local function l(n,e)local e=e or __G__TRACKBACK__
+local n,e=xpcall(n,e)if not n then
+dumptofile(e,'error stack info',false,5)end
+return n,e
+end
+local r=function(e,n)return math.modf(e/n)end
+local e=function(n,e)return math.modf(n-1/e)+1
+end
+local function t(o,l,n)local e
+for a,o in pairs(o)do
+e={}table.merge(e,l)e[#e+1]=a
+if(type(o)~='table')then
+n[o]=e
+else
+t(o,e,n)end
+end
+return n
+end
+local function n(e)return t(e,{},{})end
+if(not cc or not cc.exports)then
+_G.my={}else
+cc.exports.my=my or{}end
+my.mxpcall=l
+return{goonReflact=t,makeReflactMap=n,mxpcall=l,mdiv=r,}end)package.preload['src.app.Game.mSKGame.ext.Tree']=(function(...)local n
+n=function(o,l,e,t)if(e and e<t)then
+return nil
+end
+for a,o in pairs(o)do
+if(type(o)=='table')then
+n(o,l,e,t+1)else
+l(o,a,t)end
+end
+return true
+end
+local l
+l=function(t,e,o)return n(t,e,o,1)end
+local o
+o=function(t,l,e,n)if(e and e<n)then
+return nil
+end
+for a,t in pairs(t)do
+if(n==e)then
+l(t,a)elseif(n<e and type(t)=='table')then
+o(t,l,e,n+1)end
+end
+return true
+end
+local a
+a=function(n,e,t)return o(n,e,t,1)end
+local t
+t=function(n,o,e,l)if(e and e<l)then
+return nil
+end
+for a,n in ipairs(n)do
+if(type(n)=='table')then
+t(n,o,e,l+1)else
+o(n,a)end
+end
+return true
+end
+local i
+i=function(t,e,o)return n(t,e,o,1)end
+local o
+o=function(t,i,n,a)if(n and n<a)then
+return nil
+end
+local r={}local e
+for l,t in pairs(t)do
+if(type(t)=='table')then
+e=o(t,i,n,a+1)else
+e=i(t,l)end
+if(e~=nil)then
+r[l]=e
+end
+end
+return r
+end
+local e
+e=function(t,n,e)return o(t,n,e,1)end
+return{foreach_deep=l,iforeach_deep=i,map=e,foreach_at_deepth=a}end)package.preload['src.app.Game.mSKGame.GS.EN']=(function(...)local e=_import('..Mediator')local e=e()return e
+end)package.preload['src.app.Game.mSKGame.GS.NSM']=(function(...)local o=_import('.CoCo')local n
+n=function(t,n,l,e)gonv(e)local o=o.SNode(t,n)gonv(o)return e(o,l,{id=t,ipos=n})end
+return{setStatus=n}end)
